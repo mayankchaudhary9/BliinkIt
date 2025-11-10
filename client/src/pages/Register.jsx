@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { FaRegEyeSlash } from "react-icons/fa6";
 import { FaRegEye } from "react-icons/fa6";
+import Axios from "../utils/Axios";
+import SummaryApi from "../common/SummaryApi";
+import AxiosToastError from "../utils/AxiosToastError";
+import { useNavigate, Link } from "react-router-dom";
 
 const Register = () => {
   const [data, setData] = useState({
@@ -13,6 +17,7 @@ const Register = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -32,6 +37,30 @@ const Register = () => {
 
     if (data.password !== data.confirmPassword) {
       toast.error("password and confirm password must be same");
+      return;
+    }
+    try {
+      const response = await Axios({
+        ...SummaryApi.register,
+        data: data,
+      });
+
+      if (response.data.error) {
+        toast.error(response.data.message);
+      }
+
+      if (response.data.success) {
+        toast.success(response.data.message);
+        setData({
+          name: "",
+          email: "",
+          password: "",
+          confirmPassword: "",
+        });
+        navigate("/login");
+      }
+    } catch (error) {
+      AxiosToastError(error);
     }
   };
 
@@ -47,7 +76,7 @@ const Register = () => {
               type="text"
               id="name"
               autoFocus
-              className="bg-blue-50 p-2 border rounde outline-none focus:border-primary-200"
+              className="bg-blue-50 p-2 border rounded outline-none focus:border-primary-200"
               name="name"
               value={data.name}
               onChange={handleChange}
@@ -116,6 +145,16 @@ const Register = () => {
             Register
           </button>
         </form>
+
+        <p>
+          Already have account ?{" "}
+          <Link
+            to={"/login"}
+            className="font-semibold text-green-700 hover:text-green-800"
+          >
+            Login
+          </Link>
+        </p>
       </div>
     </section>
   );
