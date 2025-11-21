@@ -28,6 +28,13 @@ const Header = () => {
     setOpenUserMenu(false);
   };
 
+  const handleMobileUser = () => {
+    if (!user._id) {
+      navigate("/login");
+      return;
+    }
+    navigate("/user");
+  };
   return (
     <header className="h-24 lg:h-20 lg:shadow-md sticky top-0 flex flex-col justify-center gap-1 bg-white">
       {!(isSearchPage && isMobile) && (
@@ -59,7 +66,10 @@ const Header = () => {
           {/* login and myCartcode  */}
           <div className="">
             {/* This icons only display in mobiles  */}
-            <button className="text-neutral-600 lg:hidden">
+            <button
+              className="text-neutral-600 lg:hidden"
+              onClick={handleMobileUser}
+            >
               <FaRegUserCircle size={26} />
             </button>
 
