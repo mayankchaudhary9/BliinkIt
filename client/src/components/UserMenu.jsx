@@ -7,6 +7,7 @@ import Axios from "../utils/Axios.js";
 import { logout } from "../app/userSlice";
 import toast from "react-hot-toast";
 import AxiosToastError from "../utils/AxiosToastError.js";
+import { TbExternalLink } from "react-icons/tb";
 
 const UserMenu = ({ close }) => {
   const user = useSelector((state) => state.user);
@@ -33,13 +34,26 @@ const UserMenu = ({ close }) => {
   return (
     <div>
       <div className="font-semibold">My Account</div>
-      <div className="text-sm">{user.name || user.mobile}</div>
+      <div className="text-sm flex items-center gap-2">
+        <span className="max-w-52 text-ellipsis line-clamp-1">
+          {user.name || user.mobile}
+        </span>
+        <Link to={"/dashboard/profile"} className="hover:text-primary-200">
+          <TbExternalLink size={15} />
+        </Link>
+      </div>
       <Divider />
       <div className="text-sm grid gap-1">
-        <Link to={""} className="px-2 hover:bg-orange-200 py-1">
+        <Link
+          to={"/dashboard/myorders"}
+          className="px-2 hover:bg-orange-200 py-1"
+        >
           My Orders
         </Link>
-        <Link to={""} className="px-2 hover:bg-orange-200 py-1">
+        <Link
+          to={"/dashboard/address"}
+          className="px-2 hover:bg-orange-200 py-1"
+        >
           Save Address
         </Link>
         <button
