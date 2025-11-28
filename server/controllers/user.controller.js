@@ -222,6 +222,8 @@ export async function uplaodAvatar(req, res) {
     });
     return res.json({
       message: "uplaod profile",
+      success: true,
+      error: false,
       data: {
         _id: userId,
         avatar: upload.url,
