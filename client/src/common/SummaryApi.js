@@ -34,7 +34,11 @@ const SummaryApi = {
     method: "get",
   },
   uploadAvatar: {
-    url: "/api/user/upload-avatar",
+    url: "/api/user/uplaod-avatar",
+    method: "put",
+  },
+  updateUserDetails: {
+    url: "/api/user/update-user",
     method: "put",
   },
 };

@@ -261,7 +261,7 @@ export async function updateUserDetails(req, res) {
     );
 
     return res.json({
-      message: "update user successfully",
+      message: "Updated successfully",
       error: false,
       success: true,
       data: updateUser,
