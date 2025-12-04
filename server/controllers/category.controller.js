@@ -1,6 +1,6 @@
-import CategoryModel from "../models/category.model";
+import CategoryModel from "../models/category.model.js";
 
-const AddCategoryController = async (req, res) => {
+export const AddCategoryController = async (req, res) => {
   try {
     const { name, image } = req.body;
 
@@ -19,6 +19,13 @@ const AddCategoryController = async (req, res) => {
 
     const saveCategory = await addCategory.save();
 
+    if (!saveCategory) {
+      return res.status(500).json({
+        message: "Not Created",
+        error: true,
+        success: false,
+      });
+    }
     return res.json({
       message: "Add Category",
       data: saveCategory,

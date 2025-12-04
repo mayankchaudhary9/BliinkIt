@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { IoCloseOutline } from "react-icons/io5";
+import uploadImage from "../utils/UploadImage";
 
 const UploadCategoryModal = ({ close }) => {
   const [data, setData] = useState({
@@ -22,14 +23,22 @@ const UploadCategoryModal = ({ close }) => {
     e.preventDefault();
   };
 
-  const handleUploadCategory = (e) => {
+  const handleUploadCategoryImage = async (e) => {
     const file = e.target.files[0];
 
     if (!file) {
       return;
     }
 
-    con;
+    const response = await uploadImage(file);
+    const { data: ImageResponse } = response;
+
+    setData((prev) => {
+      return {
+        ...prev,
+        image: ImageResponse.data.url,
+      };
+    });
   };
   return (
     <section className="fixed top-0 bottom-0 left-0 right-0 p-4 bg-neutral-800/60 flex items-center justify-center">
@@ -58,11 +67,18 @@ const UploadCategoryModal = ({ close }) => {
             <p>Image</p>
             <div className="flex gap-4 flex-col lg:flex-row items-center">
               <div className="bg-blue-50 border h-36 w-full lg:w-36 flex items-center justify-center rounded">
-                <p className="text=sm text-neutral-500">No Image</p>
+                {data.image ? (
+                  <img
+                    src={data.image}
+                    alt="category"
+                    className="w-full h-full object-scale-down"
+                  />
+                ) : (
+                  <p className="text=sm text-neutral-500">No Image</p>
+                )}
               </div>
               <label htmlFor="uploadCategoryImage">
                 <div
-                  disabled={!data.name}
                   className={`
                 ${
                   !data.name ? "bg-neutral-500" : "bg-primary-200"
@@ -71,7 +87,8 @@ const UploadCategoryModal = ({ close }) => {
                   Upload Image
                 </div>
                 <input
-                  onChange={handleUploadCategory}
+                  disabled={!data.name}
+                  onChange={handleUploadCategoryImage}
                   type="file"
                   id="uploadCategoryImage"
                   className="hidden"
