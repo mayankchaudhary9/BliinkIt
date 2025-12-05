@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import { IoCloseOutline } from "react-icons/io5";
 import uploadImage from "../utils/UploadImage";
+import Axios from "../utils/Axios";
+import SummaryApi from "../common/SummaryApi";
+import toast from "react-hot-toast";
+import AxiosToastError from "../utils/AxiosToastError";
 
 const UploadCategoryModal = ({ close }) => {
   const [data, setData] = useState({
     name: "",
     image: "",
   });
+  const [loading, setLoading] = useState(false);
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -19,8 +24,25 @@ const UploadCategoryModal = ({ close }) => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      setLoading(true);
+      const response = await Axios({
+        ...SummaryApi.addCategory,
+        data: data,
+      });
+      const { data: responseData } = response;
+
+      if (responseData.success) {
+        toast.success(responseData.message);
+        close();
+      }
+    } catch (error) {
+      AxiosToastError(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleUploadCategoryImage = async (e) => {
@@ -81,8 +103,10 @@ const UploadCategoryModal = ({ close }) => {
                 <div
                   className={`
                 ${
-                  !data.name ? "bg-neutral-500" : "bg-primary-200"
-                } px-4 py-2 rounded cursor-pointer`}
+                  !data.name
+                    ? "bg-gray-300"
+                    : "border-primary-200 hover:bg-primary-100"
+                } px-4 py-2 rounded cursor-pointer border font-medium `}
                 >
                   Upload Image
                 </div>
@@ -96,6 +120,16 @@ const UploadCategoryModal = ({ close }) => {
               </label>
             </div>
           </div>
+
+          <button
+            className={`${
+              data.name && data.image
+                ? "bg-primary-200 hover:bg-primary-100"
+                : "bg-gray-300"
+            } py-2 font-semibold`}
+          >
+            Add Category
+          </button>
         </form>
       </div>
     </section>
