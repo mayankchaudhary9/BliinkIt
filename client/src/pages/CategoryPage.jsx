@@ -1,8 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import UploadCategoryModal from "../components/UploadCategoryModal";
+import AxiosToastError from "../utils/AxiosToastError";
+import Loading from "../components/Loading";
+import NoData from "../components/NoData";
+import Axios from "../utils/Axios";
+import SummaryApi from "../common/SummaryApi";
 
 const CategoryPage = () => {
   const [openUploadCategory, setOpenUploadCategory] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [categoryData, setCategoryData] = useState([]);
+
+  const fetchCategory = async () => {
+    try {
+      setLoading(true);
+      const response = await Axios({
+        ...SummaryApi.getCategory,
+      });
+      const { data: responseData } = response;
+
+      if (responseData.success) {
+        setCategoryData(responseData.data);
+      }
+    } catch (error) {
+      AxiosToastError(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchCategory();
+  }, []);
   return (
     <section>
       <div className="p-2 bg-white shadow-md flex items-center justify-between">
@@ -14,6 +43,21 @@ const CategoryPage = () => {
           Add Category
         </button>
       </div>
+      {!categoryData[0] && !loading && <NoData />}
+
+      {categoryData.map((category, index) => {
+        return (
+          <div className="w-44 object-scale-down overflow-hidden">
+            <img
+              src={category.image}
+              alt={category.name}
+              className="w-52 object-scale-down"
+            />
+          </div>
+        );
+      })}
+
+      {loading && <Loading />}
 
       {openUploadCategory && (
         <UploadCategoryModal close={() => setOpenUploadCategory(false)} />
