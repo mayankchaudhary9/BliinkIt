@@ -61,11 +61,11 @@ export const getCategoryController = async (req, res) => {
 
 export const updateCategoryController = async (req, res) => {
   try {
-    const { categoryId, name, image } = req.body;
+    const { _id, name, image } = req.body;
 
     const update = await CategoryModel.updateOne(
       {
-        _id: categoryId,
+        _id: _id,
       },
       {
         name,
@@ -75,9 +75,11 @@ export const updateCategoryController = async (req, res) => {
 
     return res.json({
       message: "Updated Category",
-      error: true,
-      succes: false,
-      data: update,
+      error: false,
+      succes: true,
+      data: {
+        update,
+      },
     });
   } catch (error) {
     return res.status(500).json({
