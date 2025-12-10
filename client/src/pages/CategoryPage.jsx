@@ -6,6 +6,7 @@ import NoData from "../components/NoData";
 import Axios from "../utils/Axios";
 import SummaryApi from "../common/SummaryApi";
 import EditCategory from "../components/EditCategory";
+import ConfirmBox from "../components/ConfirmBox";
 
 const CategoryPage = () => {
   const [openUploadCategory, setOpenUploadCategory] = useState(false);
@@ -15,6 +16,10 @@ const CategoryPage = () => {
   const [editData, setEditData] = useState({
     name: "",
     image: "",
+  });
+  const [openConfirmBoxDelete, setOpenConfirmBoxDelete] = useState(false);
+  const [deleteCategory, setDeleteCategory] = useState({
+    _id: "",
   });
 
   const fetchCategory = async () => {
@@ -35,6 +40,7 @@ const CategoryPage = () => {
     }
   };
 
+  const handleDeleteCategory = () => {};
   useEffect(() => {
     fetchCategory();
   }, []);
@@ -70,7 +76,12 @@ const CategoryPage = () => {
                 >
                   Edit
                 </button>
-                <button className="flex-1 bg-red-100 hover:bg-red-200 text-red-600 font- rounded py-1">
+                <button
+                  onClick={() => {
+                    setOpenConfirmBoxDelete(true);
+                  }}
+                  className="flex-1 bg-red-100 hover:bg-red-200 text-red-600 font- rounded py-1"
+                >
                   Delete
                 </button>
               </div>
@@ -93,6 +104,14 @@ const CategoryPage = () => {
           data={editData}
           close={() => setOpenEdit(false)}
           fetchData={fetchCategory}
+        />
+      )}
+
+      {openConfirmBoxDelete && (
+        <ConfirmBox
+          close={() => setOpenConfirmBoxDelete(false)}
+          cancel={() => setOpenConfirmBoxDelete(false)}
+          confirm={handleDeleteCategory}
         />
       )}
     </section>
