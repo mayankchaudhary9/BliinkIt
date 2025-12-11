@@ -7,6 +7,7 @@ import Axios from "../utils/Axios";
 import SummaryApi from "../common/SummaryApi";
 import EditCategory from "../components/EditCategory";
 import ConfirmBox from "../components/ConfirmBox";
+import toast from "react-hot-toast";
 
 const CategoryPage = () => {
   const [openUploadCategory, setOpenUploadCategory] = useState(false);
@@ -40,10 +41,28 @@ const CategoryPage = () => {
     }
   };
 
-  const handleDeleteCategory = () => {};
   useEffect(() => {
     fetchCategory();
   }, []);
+
+  const handleDeleteCategory = async () => {
+    try {
+      const response = await Axios({
+        ...SummaryApi.deleteCategory,
+        data: deleteCategory,
+      });
+
+      const { data: responseData } = response;
+
+      if (responseData.success) {
+        toast.success(responseData.message);
+        fetchCategory();
+        setOpenConfirmBoxDelete(false);
+      }
+    } catch (error) {
+      AxiosToastError(error);
+    }
+  };
   return (
     <section>
       <div className="p-2 bg-white shadow-md flex items-center justify-between">
@@ -60,7 +79,7 @@ const CategoryPage = () => {
       <div className="p-4 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2">
         {categoryData.map((category, index) => {
           return (
-            <div className="w-32 h-56 rounded shadow-md">
+            <div className="w-32 h-56 rounded shadow-md" key={category._id}>
               <img
                 src={category.image}
                 alt={category.name}
@@ -79,6 +98,7 @@ const CategoryPage = () => {
                 <button
                   onClick={() => {
                     setOpenConfirmBoxDelete(true);
+                    setDeleteCategory(category);
                   }}
                   className="flex-1 bg-red-100 hover:bg-red-200 text-red-600 font- rounded py-1"
                 >

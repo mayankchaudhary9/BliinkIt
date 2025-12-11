@@ -45,7 +45,7 @@ export const AddCategoryController = async (req, res) => {
 
 export const getCategoryController = async (req, res) => {
   try {
-    const data = await CategoryModel.find();
+    const data = await CategoryModel.find().sort({ createdAt: -1 }); // to display in dESC order
 
     return res.json({
       data: data,
