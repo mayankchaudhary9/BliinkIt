@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import UploadCategoryModal from "../components/UploadCategoryModal";
+import UploadCategoryModel from "../components/UploadCategoryModel";
 import AxiosToastError from "../utils/AxiosToastError";
 import Loading from "../components/Loading";
 import NoData from "../components/NoData";
@@ -113,7 +113,7 @@ const CategoryPage = () => {
       {loading && <Loading />}
 
       {openUploadCategory && (
-        <UploadCategoryModal
+        <UploadCategoryModel
           fetchData={fetchCategory}
           close={() => setOpenUploadCategory(false)}
         />
