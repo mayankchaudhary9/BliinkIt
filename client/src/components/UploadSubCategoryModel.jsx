@@ -46,7 +46,16 @@ const UploadSubCategoryModel = ({ close }) => {
       (el) => el._id === categoryId
     );
     subCategoryData.category.splice(index, 1);
-    setSubCategoryData(subCategoryData);
+    setSubCategoryData((prev) => {
+      return {
+        ...prev,
+      };
+    });
+  };
+
+  const handleSubmitSubCategory = () => {
+    try {
+    } catch (error) {}
   };
   return (
     <section className="fixed top-0 bottom-0 left-0 right-0 z-50 bg-neutral-800/70 flex items-center justify-center p-4">
@@ -57,7 +66,7 @@ const UploadSubCategoryModel = ({ close }) => {
             <IoCloseOutline onClick={close} size={25} />
           </button>
         </div>
-        <form className="my-3 grid gap-3">
+        <form className="my-3 grid gap-3" onSubmit={handleSubmitSubCategory}>
           <div className="grid gap-1">
             <label htmlFor="name">Name</label>
             <input
@@ -108,7 +117,7 @@ const UploadSubCategoryModel = ({ close }) => {
                     >
                       {cat.name}
                       <div
-                        className="cursor-pointer"
+                        className="cursor-pointer hover:text-red-600"
                         onClick={() => handleRemoveCategorySelected(cat._id)}
                       >
                         <IoCloseOutline size={20} />
@@ -149,6 +158,20 @@ const UploadSubCategoryModel = ({ close }) => {
               </select>
             </div>
           </div>
+
+          <button
+            className={`px-4 py-2 border
+            ${
+              subCategoryData?.name &&
+              subCategoryData?.image &&
+              subCategoryData?.category[0]
+                ? "bg-primary-200 hover:bg-primary-100"
+                : "bg-gray-200"
+            } font-semibold
+            `}
+          >
+            Submit
+          </button>
         </form>
       </div>
     </section>
