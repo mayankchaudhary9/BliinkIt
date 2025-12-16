@@ -27,7 +27,6 @@ function App() {
 
       if (responseData.success) {
         dispatch(setAllCategory(responseData.data));
-        // setCategoryData(responseData.data);
       }
     } catch (error) {
     } finally {

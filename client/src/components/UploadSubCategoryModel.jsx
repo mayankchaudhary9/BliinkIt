@@ -40,6 +40,14 @@ const UploadSubCategoryModel = ({ close }) => {
       };
     });
   };
+
+  const handleRemoveCategorySelected = (categoryId) => {
+    const index = subCategoryData.category.findIndex(
+      (el) => el._id === categoryId
+    );
+    subCategoryData.category.splice(index, 1);
+    setSubCategoryData(subCategoryData);
+  };
   return (
     <section className="fixed top-0 bottom-0 left-0 right-0 z-50 bg-neutral-800/70 flex items-center justify-center p-4">
       <div className="w-full max-w-5xl bg-white p-4 rounded">
@@ -89,11 +97,42 @@ const UploadSubCategoryModel = ({ close }) => {
           </div>
           <div className="grid gap-1">
             <label>Select Category</label>
-            <div className="border focus-within:border-primary-200">
+            <div className="border focus-within:border-primary-200 rounded">
               {/* Display value */}
-
+              <div className="flex flex-wrap gap-2">
+                {subCategoryData.category.map((cat, index) => {
+                  return (
+                    <p
+                      key={cat._id + "selectedValue"}
+                      className="bg-white shadow-md px-1 m-1 flex items-center gap-2"
+                    >
+                      {cat.name}
+                      <div
+                        className="cursor-pointer"
+                        onClick={() => handleRemoveCategorySelected(cat._id)}
+                      >
+                        <IoCloseOutline size={20} />
+                      </div>
+                    </p>
+                  );
+                })}
+              </div>
               {/* Select value */}
-              <select className="w-full p-2 bg-transparent outline-none">
+              <select
+                className="w-full p-2 bg-transparent outline-none border"
+                onChange={(e) => {
+                  const value = e.target.value;
+                  const categoryDetails = allCategory.find(
+                    (el) => el._id == value
+                  );
+                  setSubCategoryData((prev) => {
+                    return {
+                      ...prev,
+                      category: [...prev.category, categoryDetails],
+                    };
+                  });
+                }}
+              >
                 <option value={""} disabled>
                   Select Category
                 </option>
