@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import { IoCloseOutline } from "react-icons/io5";
 import uploadImage from "../utils/UploadImage";
 import { useSelector } from "react-redux";
+import Axios from "../utils/Axios";
+import SummaryApi from "../common/SummaryApi";
+import toast from "react-hot-toast";
+import AxiosToastError from "../utils/AxiosToastError";
 
 const UploadSubCategoryModel = ({ close }) => {
   const [subCategoryData, setSubCategoryData] = useState({
@@ -53,9 +57,25 @@ const UploadSubCategoryModel = ({ close }) => {
     });
   };
 
-  const handleSubmitSubCategory = () => {
+  const handleSubmitSubCategory = async (e) => {
+    e.preventDefault();
     try {
-    } catch (error) {}
+      const response = await Axios({
+        ...SummaryApi.createSubCategory,
+        data: subCategoryData,
+      });
+
+      const { data: responseData } = response;
+
+      if (responseData.success) {
+        toast.success(responseData.message);
+        if (close) {
+          close();
+        }
+      }
+    } catch (error) {
+      AxiosToastError(error);
+    }
   };
   return (
     <section className="fixed top-0 bottom-0 left-0 right-0 z-50 bg-neutral-800/70 flex items-center justify-center p-4">
@@ -142,9 +162,7 @@ const UploadSubCategoryModel = ({ close }) => {
                   });
                 }}
               >
-                <option value={""} disabled>
-                  Select Category
-                </option>
+                <option value={""}>Select Category</option>
                 {allCategory.map((category, index) => {
                   return (
                     <option
