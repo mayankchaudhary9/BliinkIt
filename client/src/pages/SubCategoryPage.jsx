@@ -3,13 +3,16 @@ import UploadSubCategoryModel from "../components/UploadSubCategoryModel";
 import AxiosToastError from "../utils/AxiosToastError";
 import Axios from "../utils/Axios";
 import SummaryApi from "../common/SummaryApi";
+import { useEffect } from "react";
 
 const SubCategoryPage = () => {
   const [openAddSubCategory, setOpenAddSubCategory] = useState(false);
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const fetchSubCategory = async () => {
     try {
+      setLoading(true);
       const response = await Axios({
         ...SummaryApi.getSubCategory,
       });
@@ -20,8 +23,15 @@ const SubCategoryPage = () => {
       }
     } catch (error) {
       AxiosToastError(error);
+    } finally {
+      setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchSubCategory();
+  }, []);
+
   return (
     <section>
       <div className="p-2 bg-white shadow-md flex items-center justify-between">
