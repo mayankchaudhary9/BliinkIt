@@ -35,3 +35,21 @@ export const AddSubCategoryController = async (req, res) => {
     });
   }
 };
+
+export const getSubCategoryController = async (req, res) => {
+  try {
+    const data = await SubCategoryModel.find().sort({ createdAt: -1 });
+    return res.json({
+      message: "Sub Category Data",
+      data: data,
+      error: false,
+      success: true,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message || error,
+      error: true,
+      succes: false,
+    });
+  }
+};
