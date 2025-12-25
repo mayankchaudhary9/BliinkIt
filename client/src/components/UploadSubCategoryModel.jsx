@@ -131,7 +131,7 @@ const UploadSubCategoryModel = ({ close }) => {
               <div className="flex flex-wrap gap-2">
                 {subCategoryData.category.map((cat, index) => {
                   return (
-                    <p
+                    <div
                       key={cat._id + "selectedValue"}
                       className="bg-white shadow-md px-1 m-1 flex items-center gap-2"
                     >
@@ -142,7 +142,7 @@ const UploadSubCategoryModel = ({ close }) => {
                       >
                         <IoCloseOutline size={20} />
                       </div>
-                    </p>
+                    </div>
                   );
                 })}
               </div>

@@ -6,7 +6,7 @@ import SummaryApi from "../common/SummaryApi";
 import toast from "react-hot-toast";
 import AxiosToastError from "../utils/AxiosToastError";
 
-const EditCategory = ({ close, fetchData, data: CategoryData }) => {
+const EditCategory = ({ close, data: CategoryData }) => {
   const [data, setData] = useState({
     _id: CategoryData._id,
     name: CategoryData.name,
@@ -38,7 +38,6 @@ const EditCategory = ({ close, fetchData, data: CategoryData }) => {
       if (responseData.success) {
         toast.success(responseData.message);
         close();
-        fetchData();
       }
     } catch (error) {
       AxiosToastError(error);

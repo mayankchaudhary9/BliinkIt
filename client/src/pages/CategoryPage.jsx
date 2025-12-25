@@ -30,7 +30,7 @@ const CategoryPage = () => {
     setCategoryData(allCategory);
   }, [allCategory]);
 
-  // below code is comment bcz now I'am it in app.jsx
+  // below code is comment bcz now I'am using it in app.jsx
 
   // const fetchCategory = async () => {
   //   try {
@@ -63,7 +63,6 @@ const CategoryPage = () => {
 
       if (responseData.success) {
         toast.success(responseData.message);
-        fetchCategory();
         setOpenConfirmBoxDelete(false);
       }
     } catch (error) {
@@ -120,18 +119,11 @@ const CategoryPage = () => {
       {loading && <Loading />}
 
       {openUploadCategory && (
-        <UploadCategoryModel
-          fetchData={fetchCategory}
-          close={() => setOpenUploadCategory(false)}
-        />
+        <UploadCategoryModel close={() => setOpenUploadCategory(false)} />
       )}
 
       {openEdit && (
-        <EditCategory
-          data={editData}
-          close={() => setOpenEdit(false)}
-          fetchData={fetchCategory}
-        />
+        <EditCategory data={editData} close={() => setOpenEdit(false)} />
       )}
 
       {openConfirmBoxDelete && (

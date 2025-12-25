@@ -29,7 +29,7 @@ function App() {
         dispatch(setAllCategory(responseData.data));
       }
     } catch (error) {
-    } finally {
+      console.log(error);
     }
   };
 

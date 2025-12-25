@@ -56,7 +56,7 @@ export const getCategoryController = async (req, res) => {
     return res.status(500).json({
       message: error.message || error,
       error: true,
-      succes: false,
+      success: false,
     });
   }
 };
@@ -78,7 +78,7 @@ export const updateCategoryController = async (req, res) => {
     return res.json({
       message: "Updated Category",
       error: false,
-      succes: true,
+      success: true,
       data: {
         update,
       },
@@ -87,7 +87,7 @@ export const updateCategoryController = async (req, res) => {
     return res.status(500).json({
       message: error.message || error,
       error: true,
-      succes: false,
+      success: false,
     });
   }
 };
@@ -112,7 +112,7 @@ export const deleteCategoryController = async (req, res) => {
       return res.status(400).json({
         message: "Category is already use can't delete",
         error: true,
-        succes: false,
+        success: false,
       });
     }
 
@@ -124,13 +124,13 @@ export const deleteCategoryController = async (req, res) => {
       message: "Delete category successfully",
       data: deleteCategory,
       error: false,
-      succes: false,
+      success: true,
     });
   } catch (error) {
     return res.status(500).json({
       message: error.message || error,
       error: true,
-      succes: false,
+      success: false,
     });
   }
 };

@@ -25,13 +25,13 @@ export const AddSubCategoryController = async (req, res) => {
       message: "Sub Category Created",
       data: save,
       error: false,
-      succes: true,
+      success: true,
     });
   } catch (error) {
     return res.status(500).json({
       message: error.message || error,
       error: true,
-      succes: false,
+      success: false,
     });
   }
 };
@@ -49,7 +49,7 @@ export const getSubCategoryController = async (req, res) => {
     return res.status(500).json({
       message: error.message || error,
       error: true,
-      succes: false,
+      success: false,
     });
   }
 };

@@ -6,7 +6,7 @@ import SummaryApi from "../common/SummaryApi";
 import toast from "react-hot-toast";
 import AxiosToastError from "../utils/AxiosToastError";
 
-const UploadCategoryModel = ({ close, fetchData }) => {
+const UploadCategoryModel = ({ close }) => {
   const [data, setData] = useState({
     name: "",
     image: "",
@@ -37,7 +37,6 @@ const UploadCategoryModel = ({ close, fetchData }) => {
       if (responseData.success) {
         toast.success(responseData.message);
         close();
-        fetchData();
       }
     } catch (error) {
       AxiosToastError(error);
