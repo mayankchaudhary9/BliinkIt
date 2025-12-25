@@ -4,11 +4,14 @@ import AxiosToastError from "../utils/AxiosToastError";
 import Axios from "../utils/Axios";
 import SummaryApi from "../common/SummaryApi";
 import { useEffect } from "react";
+import DisplayTable from "../components/DisplayTable";
+import { createColumnHelper } from "@tanstack/react-table";
 
 const SubCategoryPage = () => {
   const [openAddSubCategory, setOpenAddSubCategory] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const columnHelper = createColumnHelper();
 
   const fetchSubCategory = async () => {
     try {
@@ -32,6 +35,29 @@ const SubCategoryPage = () => {
     fetchSubCategory();
   }, []);
 
+  const column = [
+    columnHelper.accessor("name", {
+      header: "Name",
+    }),
+    columnHelper.accessor("image", {
+      header: "Image",
+      cell: ({ row }) => {
+        return (
+          <div className="flex justify-center items-center">
+            <img
+              src={row.original.image}
+              alt={row.original.name}
+              className="w-8 h-8"
+            />
+          </div>
+        );
+      },
+    }),
+    columnHelper.accessor("category", {
+      header: "Category",
+    }),
+  ];
+
   return (
     <section>
       <div className="p-2 bg-white shadow-md flex items-center justify-between">
@@ -42,6 +68,10 @@ const SubCategoryPage = () => {
         >
           Add Sub Category
         </button>
+      </div>
+
+      <div>
+        <DisplayTable data={data} column={column} />
       </div>
 
       {openAddSubCategory && (
