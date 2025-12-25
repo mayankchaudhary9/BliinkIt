@@ -6,12 +6,14 @@ import SummaryApi from "../common/SummaryApi";
 import { useEffect } from "react";
 import DisplayTable from "../components/DisplayTable";
 import { createColumnHelper } from "@tanstack/react-table";
+import ViewImage from "../components/ViewImage";
 
 const SubCategoryPage = () => {
   const [openAddSubCategory, setOpenAddSubCategory] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const columnHelper = createColumnHelper();
+  const [imageUrl, setImageUrl] = useState("");
 
   const fetchSubCategory = async () => {
     try {
@@ -48,6 +50,7 @@ const SubCategoryPage = () => {
               src={row.original.image}
               alt={row.original.name}
               className="w-8 h-8"
+              onClick={() => setImageUrl(row.original.image)}
             />
           </div>
         );
@@ -77,6 +80,8 @@ const SubCategoryPage = () => {
       {openAddSubCategory && (
         <UploadSubCategoryModel close={() => setOpenAddSubCategory(false)} />
       )}
+
+      {imageUrl && <ViewImage url={imageUrl} close={() => setImageUrl("")} />}
     </section>
   );
 };
