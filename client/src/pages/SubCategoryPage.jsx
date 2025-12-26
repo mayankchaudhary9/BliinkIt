@@ -49,7 +49,7 @@ const SubCategoryPage = () => {
             <img
               src={row.original.image}
               alt={row.original.name}
-              className="w-8 h-8"
+              className="w-8 h-8 cursor-pointer"
               onClick={() => setImageUrl(row.original.image)}
             />
           </div>
@@ -58,6 +58,32 @@ const SubCategoryPage = () => {
     }),
     columnHelper.accessor("category", {
       header: "Category",
+      cell: ({ row }) => {
+        return (
+          <>
+            {row.original.category.map((c, index) => {
+              return (
+                <p
+                  key={c._id + "table"}
+                  className="shadow-md px-1 inline-block"
+                >
+                  {c.name}
+                </p>
+              );
+            })}
+          </>
+        );
+      },
+    }),
+    columnHelper.accessor("_id", {
+      header: "Action",
+      cell: ({ row }) => {
+        return (
+          <div>
+            <button></button>
+          </div>
+        );
+      },
     }),
   ];
 
