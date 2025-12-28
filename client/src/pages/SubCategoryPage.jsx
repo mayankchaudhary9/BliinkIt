@@ -7,6 +7,9 @@ import { useEffect } from "react";
 import DisplayTable from "../components/DisplayTable";
 import { createColumnHelper } from "@tanstack/react-table";
 import ViewImage from "../components/ViewImage";
+import { RiPencilFill } from "react-icons/ri";
+import { MdDelete } from "react-icons/md";
+import EditSubCategory from "../components/EditSubCategory";
 
 const SubCategoryPage = () => {
   const [openAddSubCategory, setOpenAddSubCategory] = useState(false);
@@ -14,6 +17,10 @@ const SubCategoryPage = () => {
   const [loading, setLoading] = useState(false);
   const columnHelper = createColumnHelper();
   const [imageUrl, setImageUrl] = useState("");
+  const [openEdit, setOpenEdit] = useState(false);
+  const [editData, setEditData] = useState({
+    _id: "",
+  });
 
   const fetchSubCategory = async () => {
     try {
@@ -79,8 +86,19 @@ const SubCategoryPage = () => {
       header: "Action",
       cell: ({ row }) => {
         return (
-          <div>
-            <button></button>
+          <div className="flex justify-center items-center gap-3">
+            <button
+              onClick={() => {
+                setOpenEdit(true);
+                setEditData(row.original);
+              }}
+              className="p-2 bg-green-100 rounded-full hover:text-green-600"
+            >
+              <RiPencilFill size={20} />
+            </button>
+            <button className="p-2 bg-red-100 rounded-full text-red-500 hover:text-red-600">
+              <MdDelete size={20} />
+            </button>
           </div>
         );
       },
@@ -108,6 +126,10 @@ const SubCategoryPage = () => {
       )}
 
       {imageUrl && <ViewImage url={imageUrl} close={() => setImageUrl("")} />}
+
+      {openEdit && (
+        <EditSubCategory data={editData} close={() => setOpenEdit(false)} />
+      )}
     </section>
   );
 };
