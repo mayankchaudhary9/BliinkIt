@@ -128,7 +128,11 @@ const SubCategoryPage = () => {
       {imageUrl && <ViewImage url={imageUrl} close={() => setImageUrl("")} />}
 
       {openEdit && (
-        <EditSubCategory data={editData} close={() => setOpenEdit(false)} />
+        <EditSubCategory
+          data={editData}
+          close={() => setOpenEdit(false)}
+          fetchData={fetchSubCategory}
+        />
       )}
     </section>
   );
