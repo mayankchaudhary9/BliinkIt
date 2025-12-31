@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 import { FaCloudUploadAlt } from "react-icons/fa";
+import uploadImage from "../utils/UploadImage";
+import Loading from "../components/Loading";
+import ViewImage from "../components/ViewImage";
+import { MdDelete } from "react-icons/md";
 
 const UploadProduct = () => {
   const [data, setData] = useState({
@@ -14,6 +18,8 @@ const UploadProduct = () => {
     description: "",
     more_details: {},
   });
+  const [imageLoading, setImageLoading] = useState(false);
+  const [viewImageURL, setViewImageURL] = useState("");
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -25,14 +31,36 @@ const UploadProduct = () => {
     });
   };
 
-  const handleUploadImage = (e) => {
+  const handleUploadImage = async (e) => {
     const file = e.target.files[0];
 
     if (!file) {
       return;
     }
-    console.log(file, "drfgbhjnk");
+
+    setImageLoading(true);
+    const response = await uploadImage(file);
+    const { data: ImageResponse } = response;
+    const imageUrl = ImageResponse.data.url;
+
+    setData((prev) => {
+      return {
+        ...prev,
+        image: [...prev.image, imageUrl],
+      };
+    });
+    setImageLoading(false);
   };
+
+  const handleDeleteImage = async (index) => {
+    data.image.splice(index, 1);
+    setData((prev) => {
+      return {
+        ...prev,
+      };
+    });
+  };
+
   return (
     <section>
       <div className="p-2 bg-white shadow-md flex items-center justify-between">
@@ -76,8 +104,14 @@ const UploadProduct = () => {
                 className="bg-blue-50 h-24 border rounded flex justify-center items-center cursor-pointer"
               >
                 <div className="flex justify-center items-center flex-col">
-                  <FaCloudUploadAlt size={35} />
-                  <p>Upload Image</p>
+                  {imageLoading ? (
+                    <Loading />
+                  ) : (
+                    <>
+                      <FaCloudUploadAlt size={35} />
+                      <p>Upload Image</p>
+                    </>
+                  )}
                 </div>
                 <input
                   id="ProductImage"
@@ -87,11 +121,37 @@ const UploadProduct = () => {
                   onChange={handleUploadImage}
                 />
               </label>
-              <div>{/* display uploaded images */}</div>
+              {/* display uploaded images */}
+              <div className="my-2 flex flex-wrap gap-4">
+                {data.image.map((img, index) => {
+                  return (
+                    <div
+                      key={img + index}
+                      className="h-20 w-20 min-w-20 bg-blue-50 border relative group"
+                    >
+                      <img
+                        src={img}
+                        alt={img}
+                        className="w-full h-full object-scale-down cursor-pointer"
+                        onClick={() => setViewImageURL(img)}
+                      />
+                      <div
+                        onClick={() => handleDeleteImage(index)}
+                        className="absolute bottom-0 right-0 p-1 bg-red-600 hover:bg-red-700 rounded text-white hidden group-hover:block cursor-pointer"
+                      >
+                        <MdDelete />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </form>
       </div>
+      {viewImageURL && (
+        <ViewImage url={viewImageURL} close={() => setViewImageURL("")} />
+      )}
     </section>
   );
 };
