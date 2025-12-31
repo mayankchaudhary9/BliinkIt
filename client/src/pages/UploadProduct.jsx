@@ -68,6 +68,7 @@ const UploadProduct = () => {
       </div>
       <div className="grid p-3">
         <form className="grid gap-2">
+          {/* Name */}
           <div className="grid gap-1">
             <label htmlFor="name">Name</label>
             <input
@@ -81,6 +82,7 @@ const UploadProduct = () => {
               className="bg-blue-50 p-2 outline-none border focus-within:border-primary-200 rounded"
             />
           </div>
+          {/* Description */}
           <div className="grid gap-1">
             <label htmlFor="description">Description</label>
             <textarea
@@ -96,6 +98,7 @@ const UploadProduct = () => {
               className="bg-blue-50 p-2 outline-none border focus-within:border-primary-200 rounded resize-none"
             />
           </div>
+          {/* Image */}
           <div>
             <p>Image</p>
             <div>
@@ -122,12 +125,12 @@ const UploadProduct = () => {
                 />
               </label>
               {/* display uploaded images */}
-              <div className="my-2 flex flex-wrap gap-4">
+              <div className="flex flex-wrap gap-4">
                 {data.image.map((img, index) => {
                   return (
                     <div
                       key={img + index}
-                      className="h-20 w-20 min-w-20 bg-blue-50 border relative group"
+                      className="h-20 w-20 mt-1 min-w-20 bg-blue-50 border relative group"
                     >
                       <img
                         src={img}
@@ -145,6 +148,15 @@ const UploadProduct = () => {
                   );
                 })}
               </div>
+            </div>
+          </div>
+          {/* Category */}
+          <div className="grid gap-1">
+            <label>Category</label>
+            <div>
+              <select className="bg-blue-50 border w-full p-2 rounded">
+                <option value={""}>Select Category</option>
+              </select>
             </div>
           </div>
         </form>
