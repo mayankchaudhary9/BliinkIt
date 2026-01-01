@@ -6,6 +6,7 @@ import ViewImage from "../components/ViewImage";
 import { MdDelete } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { IoCloseOutline } from "react-icons/io5";
+import AddFieldComponent from "../components/AddFieldComponent";
 
 const UploadProduct = () => {
   const [data, setData] = useState({
@@ -26,6 +27,9 @@ const UploadProduct = () => {
   const allSubCategory = useSelector((state) => state.product.allSubCategory);
   const [selectCategory, setSelectCategory] = useState("");
   const [selectSubCategory, setSelectSubCategory] = useState("");
+
+  const [openAddField, setOpenAddField] = useState(false);
+  const [fieldName, setFieldName] = useState("");
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -85,16 +89,32 @@ const UploadProduct = () => {
     });
   };
 
+  const handleAddField = () => {
+    setData((prev) => {
+      return {
+        ...prev,
+        more_details: {
+          ...prev.more_details,
+          [fieldName]: "",
+        },
+      };
+    });
+    setFieldName("");
+    setOpenAddField(false);
+  };
+
   return (
     <section>
       <div className="p-2 bg-white shadow-md flex items-center justify-between">
         <h2 className="font-semibold">Upload Product</h2>
       </div>
       <div className="grid p-3">
-        <form className="grid gap-2">
+        <form className="grid gap-4">
           {/* Name */}
           <div className="grid gap-1">
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name" className="font-medium">
+              Name
+            </label>
             <input
               id="name"
               type="text"
@@ -108,7 +128,9 @@ const UploadProduct = () => {
           </div>
           {/* Description */}
           <div className="grid gap-1">
-            <label htmlFor="description">Description</label>
+            <label htmlFor="description" className="font-medium">
+              Description
+            </label>
             <textarea
               id="description"
               type="text"
@@ -124,7 +146,7 @@ const UploadProduct = () => {
           </div>
           {/* Image */}
           <div>
-            <p>Image</p>
+            <p className="font-medium">Image</p>
             <div>
               <label
                 htmlFor="ProductImage"
@@ -176,7 +198,7 @@ const UploadProduct = () => {
           </div>
           {/* Category */}
           <div className="grid gap-1">
-            <label>Category</label>
+            <label className="font-medium">Category</label>
             <div>
               <select
                 className="bg-blue-50 border w-full p-2 rounded"
@@ -222,7 +244,7 @@ const UploadProduct = () => {
           </div>
           {/* SubCategory */}
           <div className="grid gap-1">
-            <label>Sub Category</label>
+            <label className="font-medium">Sub Category</label>
             <div>
               <select
                 className="bg-blue-50 border w-full p-2 rounded"
@@ -270,10 +292,117 @@ const UploadProduct = () => {
               </div>
             </div>
           </div>
+          {/* Unit */}
+          <div className="grid gap-1">
+            <label htmlFor="unit" className="font-medium">
+              Unit
+            </label>
+            <input
+              id="unit"
+              type="text"
+              placeholder="Enter product unit"
+              name="unit"
+              value={data.unit}
+              onChange={handleOnChange}
+              required
+              className="bg-blue-50 p-2 outline-none border focus-within:border-primary-200 rounded"
+            />
+          </div>
+          {/* Stock */}
+          <div className="grid gap-1">
+            <label htmlFor="stock" className="font-medium">
+              Number of Stock
+            </label>
+            <input
+              id="stock"
+              type="number"
+              placeholder="Enter product stock"
+              name="stock"
+              value={data.stock}
+              onChange={handleOnChange}
+              required
+              className="bg-blue-50 p-2 outline-none border focus-within:border-primary-200 rounded"
+            />
+          </div>
+          {/* Price */}
+          <div className="grid gap-1">
+            <label htmlFor="price" className="font-medium">
+              Price
+            </label>
+            <input
+              id="price"
+              type="number"
+              placeholder="Enter product price"
+              name="price"
+              value={data.price}
+              onChange={handleOnChange}
+              required
+              className="bg-blue-50 p-2 outline-none border focus-within:border-primary-200 rounded"
+            />
+          </div>
+          {/* Discount */}
+          <div className="grid gap-1">
+            <label htmlFor="discount" className="font-medium">
+              Discount
+            </label>
+            <input
+              id="discount"
+              type="number"
+              placeholder="Enter product discount"
+              name="discount"
+              value={data.discount}
+              onChange={handleOnChange}
+              required
+              className="bg-blue-50 p-2 outline-none border focus-within:border-primary-200 rounded"
+            />
+          </div>
+          {/* Add More Fields Button */}
+          {Object?.keys(data?.more_details)?.map((k, index) => {
+            return (
+              <div className="grid gap-1">
+                <label htmlFor={k} className="font-medium">
+                  {k}
+                </label>
+                <input
+                  id={k}
+                  type="text"
+                  value={data?.more_details[k]}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setData((prev) => {
+                      return {
+                        ...prev,
+                        more_details: {
+                          ...prev.more_details,
+                          [k]: value,
+                        },
+                      };
+                    });
+                  }}
+                  required
+                  className="bg-blue-50 p-2 outline-none border focus-within:border-primary-200 rounded"
+                />
+              </div>
+            );
+          })}
+          <div
+            onClick={() => setOpenAddField(true)}
+            className="bg-primary-200 hover:bg-white py-1 px-3 w-32 text-center font-semibold border border-primary-200 hover:text-neutral-900 cursor-pointer rounded"
+          >
+            Add Fields
+          </div>
         </form>
       </div>
       {viewImageURL && (
         <ViewImage url={viewImageURL} close={() => setViewImageURL("")} />
+      )}
+      {openAddField && (
+        <AddFieldComponent
+          value={fieldName}
+          onChange={(e) => setFieldName(e.target.value)}
+          submit={handleAddField}
+          close={() => setOpenAddField(false)}
+        />
       )}
     </section>
   );
