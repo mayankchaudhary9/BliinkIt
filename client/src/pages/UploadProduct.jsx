@@ -103,13 +103,18 @@ const UploadProduct = () => {
     setOpenAddField(false);
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(data, "data");
+  };
+
   return (
     <section>
       <div className="p-2 bg-white shadow-md flex items-center justify-between">
         <h2 className="font-semibold">Upload Product</h2>
       </div>
       <div className="grid p-3">
-        <form className="grid gap-4">
+        <form className="grid gap-4" onSubmit={handleSubmit}>
           {/* Name */}
           <div className="grid gap-1">
             <label htmlFor="name" className="font-medium">
@@ -387,10 +392,13 @@ const UploadProduct = () => {
           })}
           <div
             onClick={() => setOpenAddField(true)}
-            className="bg-primary-200 hover:bg-white py-1 px-3 w-32 text-center font-semibold border border-primary-200 hover:text-neutral-900 cursor-pointer rounded"
+            className="hover:bg-primary-200 bg-white py-1 px-3 w-32 text-center font-semibold border border-primary-200 hover:text-neutral-900 cursor-pointer rounded"
           >
             Add Fields
           </div>
+          <button className="bg-primary-100 hover:bg-primary-200 py-2 rounded font-semibold">
+            Submit
+          </button>
         </form>
       </div>
       {viewImageURL && (
