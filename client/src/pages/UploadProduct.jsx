@@ -4,6 +4,8 @@ import uploadImage from "../utils/UploadImage";
 import Loading from "../components/Loading";
 import ViewImage from "../components/ViewImage";
 import { MdDelete } from "react-icons/md";
+import { useSelector } from "react-redux";
+import { IoCloseOutline } from "react-icons/io5";
 
 const UploadProduct = () => {
   const [data, setData] = useState({
@@ -11,7 +13,7 @@ const UploadProduct = () => {
     image: [],
     category: [],
     subCategory: [],
-    unit: [],
+    unit: "",
     stock: "",
     price: "",
     discount: "",
@@ -20,6 +22,10 @@ const UploadProduct = () => {
   });
   const [imageLoading, setImageLoading] = useState(false);
   const [viewImageURL, setViewImageURL] = useState("");
+  const allCategory = useSelector((state) => state.product.allCategory);
+  const allSubCategory = useSelector((state) => state.product.allSubCategory);
+  const [selectCategory, setSelectCategory] = useState("");
+  const [selectSubCategory, setSelectSubCategory] = useState("");
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -54,6 +60,24 @@ const UploadProduct = () => {
 
   const handleDeleteImage = async (index) => {
     data.image.splice(index, 1);
+    setData((prev) => {
+      return {
+        ...prev,
+      };
+    });
+  };
+
+  const handleRemoveCategory = async (index) => {
+    data.category.splice(index, 1);
+    setData((prev) => {
+      return {
+        ...prev,
+      };
+    });
+  };
+
+  const handleRemoveSubCategory = async (index) => {
+    data.subCategory.splice(index, 1);
     setData((prev) => {
       return {
         ...prev,
@@ -154,9 +178,96 @@ const UploadProduct = () => {
           <div className="grid gap-1">
             <label>Category</label>
             <div>
-              <select className="bg-blue-50 border w-full p-2 rounded">
+              <select
+                className="bg-blue-50 border w-full p-2 rounded"
+                value={selectCategory}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  const category = allCategory.find((el) => el._id === value);
+
+                  setData((prev) => {
+                    return {
+                      ...prev,
+                      category: [...prev.category, category],
+                    };
+                  });
+
+                  setSelectCategory("");
+                }}
+              >
                 <option value={""}>Select Category</option>
+                {allCategory.map((c, index) => {
+                  return <option value={c?._id}>{c.name}</option>;
+                })}
               </select>
+              <div className="flex flex-wrap gap-3">
+                {data.category.map((c, index) => {
+                  return (
+                    <div
+                      key={c._id + index + "productsection"}
+                      className="text-sm flex items-center gap-1 bg-blue-50 mt-2"
+                    >
+                      <p>{c.name}</p>
+                      <div
+                        className="hover:text-red-500 cursor-pointer"
+                        onClick={() => handleRemoveCategory(index)}
+                      >
+                        <IoCloseOutline size={20} />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+          {/* SubCategory */}
+          <div className="grid gap-1">
+            <label>Sub Category</label>
+            <div>
+              <select
+                className="bg-blue-50 border w-full p-2 rounded"
+                value={selectSubCategory}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  const subCategory = allSubCategory.find(
+                    (el) => el._id === value
+                  );
+
+                  setData((prev) => {
+                    return {
+                      ...prev,
+                      subCategory: [...prev.subCategory, subCategory],
+                    };
+                  });
+
+                  setSelectSubCategory("");
+                }}
+              >
+                <option value={""} className="text-neutral-600">
+                  Select Sub Category
+                </option>
+                {allSubCategory.map((c, index) => {
+                  return <option value={c?._id}>{c.name}</option>;
+                })}
+              </select>
+              <div className="flex flex-wrap gap-3">
+                {data.subCategory.map((c, index) => {
+                  return (
+                    <div
+                      key={c._id + index + "productsection"}
+                      className="text-sm flex items-center gap-1 bg-blue-50 mt-2"
+                    >
+                      <p>{c.name}</p>
+                      <div
+                        className="hover:text-red-500 cursor-pointer"
+                        onClick={() => handleRemoveSubCategory(index)}
+                      >
+                        <IoCloseOutline size={20} />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </form>
