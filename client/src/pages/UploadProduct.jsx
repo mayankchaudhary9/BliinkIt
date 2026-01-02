@@ -7,6 +7,11 @@ import { MdDelete } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { IoCloseOutline } from "react-icons/io5";
 import AddFieldComponent from "../components/AddFieldComponent";
+import Axios from "../utils/Axios";
+import SummaryApi from "../common/SummaryApi";
+import AxiosToastError from "../utils/AxiosToastError";
+import toast from "react-hot-toast";
+import successAlert from "../utils/SuccessAlert";
 
 const UploadProduct = () => {
   const [data, setData] = useState({
@@ -103,9 +108,23 @@ const UploadProduct = () => {
     setOpenAddField(false);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(data, "data");
+    try {
+      const response = await Axios({
+        ...SummaryApi.createProduct,
+        data: data,
+      });
+
+      const { data: responseData } = response;
+
+      if (responseData.success) {
+        successAlert(responseData.message);
+      }
+    } catch (error) {
+      AxiosToastError(error);
+    }
   };
 
   return (
