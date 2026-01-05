@@ -60,3 +60,52 @@ export const createProductController = async (req, res) => {
     });
   }
 };
+
+export const getProductController = async (req, res) => {
+  try {
+    const { page, limit, search } = req.body;
+
+    if (!page) {
+      page = 1;
+    }
+
+    if (!limit) {
+      limit = 10;
+    }
+
+    // searching logic AND indexing in model file
+    const query = search
+      ? {
+          $text: {
+            $search: search,
+          },
+        }
+      : {};
+
+    // pagination logic
+    const skip = (page - 1) * limit;
+
+    const [data, totalCount] = await Promise.all([
+      ProductModel.find(query)
+        .toSorted({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit),
+      ProductModel.countDocuments(query),
+    ]);
+
+    return res.json({
+      message: "Product data",
+      error: false,
+      success: true,
+      totalCount: totalCount,
+      totalNoPage: Math.ceil(totalCount / limit),
+      data: data,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message || error,
+      error: true,
+      success: false,
+    });
+  }
+};
