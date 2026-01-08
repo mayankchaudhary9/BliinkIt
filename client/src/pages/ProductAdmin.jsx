@@ -4,12 +4,14 @@ import AxiosToastError from "../utils/AxiosToastError";
 import Axios from "../utils/Axios";
 import Loading from "../components/Loading";
 import ProductCardAdmin from "../components/ProductCardAdmin";
+import { IoIosSearch } from "react-icons/io";
 
 const ProductAdmin = () => {
   const [productData, setProductData] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [totalPageCount, setTotalPageCount] = useState(1);
+  const [search, setSearch] = useState("");
 
   const fetchProductData = async () => {
     try {
@@ -19,6 +21,7 @@ const ProductAdmin = () => {
         data: {
           page: page,
           limit: 12,
+          search: search,
         },
       });
 
@@ -49,10 +52,41 @@ const ProductAdmin = () => {
       setPage((prev) => prev - 1);
     }
   };
+
+  const handleOnChange = (e) => {
+    const { value } = e.target;
+    setSearch(value);
+    setPage(1);
+  };
+
+  useEffect(() => {
+    let flag = true;
+
+    const interval = setTimeout(() => {
+      if (flag) {
+        fetchProductData();
+        flag = false;
+      }
+    }, 300);
+
+    return () => {
+      clearTimeout(interval);
+    };
+  }, [search]);
   return (
     <section>
-      <div className="p-2 bg-white shadow-md flex items-center justify-between">
+      <div className="p-2 bg-white shadow-md flex items-center justify-between gap-4">
         <h2 className="font-semibold">Product</h2>
+        <div className="h-full w-full min-w-24 max-w-56 bg-blue-50 ml-auto px-4 py-2 flex items-center gap-3 border rounded focus-within:border-primary-200 ">
+          <IoIosSearch size={25} />
+          <input
+            type="text"
+            placeholder="Search product here...."
+            className="h-full w-full outline-none bg-transparent"
+            value={search}
+            onChange={handleOnChange}
+          />
+        </div>
       </div>
       {loading && <Loading />}
 
