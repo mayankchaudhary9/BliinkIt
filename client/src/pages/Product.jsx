@@ -3,7 +3,7 @@ import SummaryApi from "../common/SummaryApi";
 import AxiosToastError from "../utils/AxiosToastError";
 import Axios from "../utils/Axios";
 
-const ProductAdmin = () => {
+const Product = () => {
   const [productData, setProductData] = useState([]);
   const [page, setPage] = useState(1);
 
@@ -29,7 +29,7 @@ const ProductAdmin = () => {
   useEffect(() => {
     fetchProductData();
   }, []);
-  return <div>ProductAdmin</div>;
+  return <div>Product</div>;
 };
 
-export default ProductAdmin;
+export default Product;

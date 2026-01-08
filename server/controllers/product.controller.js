@@ -63,10 +63,10 @@ export const createProductController = async (req, res) => {
 
 export const getProductController = async (req, res) => {
   try {
-    const { page, limit, search } = req.body;
+    let { page, limit, search } = req.body;
 
     if (!page) {
-      page = 1;
+      page = 2;
     }
 
     if (!limit) {
@@ -86,10 +86,7 @@ export const getProductController = async (req, res) => {
     const skip = (page - 1) * limit;
 
     const [data, totalCount] = await Promise.all([
-      ProductModel.find(query)
-        .toSorted({ createdAt: -1 })
-        .skip(skip)
-        .limit(limit),
+      ProductModel.find(query).sort({ createdAt: -1 }).skip(skip).limit(limit),
       ProductModel.countDocuments(query),
     ]);
 
