@@ -7,7 +7,11 @@ import { useEffect } from "react";
 import fetchUserDetails from "./utils/fetchUserDetails";
 import { useDispatch } from "react-redux";
 import { setUserDetails } from "./app/userSlice";
-import { setAllCategory, setAllSubCategory } from "./app/productSlice";
+import {
+  setAllCategory,
+  setAllSubCategory,
+  setLoadingCategory,
+} from "./app/productSlice";
 import Axios from "./utils/Axios";
 import SummaryApi from "./common/SummaryApi";
 
@@ -20,16 +24,23 @@ function App() {
 
   const fetchCategory = async () => {
     try {
+      dispatch(setLoadingCategory(true));
       const response = await Axios({
         ...SummaryApi.getCategory,
       });
       const { data: responseData } = response;
 
       if (responseData.success) {
-        dispatch(setAllCategory(responseData.data));
+        dispatch(
+          setAllCategory(
+            responseData.data.sort((a, b) => a.name.localeCompare(b.name))
+          )
+        );
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      dispatch(setLoadingCategory(false));
     }
   };
 
@@ -41,7 +52,11 @@ function App() {
       const { data: responseData } = response;
 
       if (responseData.success) {
-        dispatch(setAllSubCategory(responseData.data));
+        dispatch(
+          setAllSubCategory(
+            responseData.data.sort((a, b) => a.name.localeCompare(b.name))
+          )
+        );
       }
     } catch (error) {
       console.log(error);
