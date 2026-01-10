@@ -5,6 +5,10 @@ import { useSelector } from "react-redux";
 
 const Home = () => {
   const loadingCategory = useSelector((state) => state.product.loadingCategory);
+  const categoryData = useSelector((state) => state.product.allCategory);
+  const subCategoryData = useSelector((state) => state.product.allSubCategory);
+
+  const handleRedirectProductListPage = (id, c) => {};
   return (
     <section className="bg-white">
       <div className="container mx-auto">
@@ -26,23 +30,31 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 my-2 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-        {loadingCategory ? (
-          new Array(12).fill(null).map((c, index) => {
-            return (
-              <div className="bg-white rounded p-4 min-h-36 grid gap-2 shadow animate-pulse">
-                <div className="bg-blue-100 min-h-24 rounded"></div>
-                <div className="bg-blue-100 h-8 rounded"></div>
-              </div>
-            );
-          })
-        ) : (
-          // <div>
-          //   <div>
-          //     <img src={} alt="" />
-          //   </div>
-          // </div>
-        )}
+      <div className="container mx-auto px-4 my-2 grid grid-cols-5 md:grid-cols-7 lg:grid-cols-10 gap-2">
+        {loadingCategory
+          ? new Array(12).fill(null).map((c, index) => {
+              return (
+                <div className="bg-white rounded p-4 min-h-36 grid gap-2 shadow animate-pulse">
+                  <div className="bg-blue-100 min-h-24 rounded"></div>
+                  <div className="bg-blue-100 h-8 rounded"></div>
+                </div>
+              );
+            })
+          : categoryData.map((c, index) => {
+              return (
+                <div
+                  className="w-full h-full"
+                  onClick={() => handleRedirectProductListPage(c._id, c.name)}
+                >
+                  <div>
+                    <img
+                      src={c.image}
+                      className="w-full h-full object-scale-down"
+                    />
+                  </div>
+                </div>
+              );
+            })}
       </div>
     </section>
   );
