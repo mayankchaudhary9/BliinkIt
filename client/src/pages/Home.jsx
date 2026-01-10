@@ -2,13 +2,29 @@ import React from "react";
 import banner from "../assets/banner.jpg";
 import bannerMobile from "../assets/banner-mobile.jpg";
 import { useSelector } from "react-redux";
+import { ValideURLConvert } from "../utils/ValideURLConvert";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const loadingCategory = useSelector((state) => state.product.loadingCategory);
   const categoryData = useSelector((state) => state.product.allCategory);
   const subCategoryData = useSelector((state) => state.product.allSubCategory);
+  const navigate = useNavigate();
 
-  const handleRedirectProductListPage = (id, c) => {};
+  const handleRedirectProductListPage = (id, c) => {
+    const subCategory = subCategoryData.find((sub) => {
+      const filterData = sub.category.some((el) => {
+        return el._id === id;
+      });
+      return filterData ? true : null;
+    });
+
+    const url = `/${ValideURLConvert(c)}-${id}/${ValideURLConvert(
+      subCategory.name
+    )}-${subCategory._id}`;
+    navigate(url);
+  };
+
   return (
     <section className="bg-white">
       <div className="container mx-auto">
@@ -34,7 +50,10 @@ const Home = () => {
         {loadingCategory
           ? new Array(12).fill(null).map((c, index) => {
               return (
-                <div className="bg-white rounded p-4 min-h-36 grid gap-2 shadow animate-pulse">
+                <div
+                  key={index + "loadingCategory"}
+                  className="bg-white rounded p-4 min-h-36 grid gap-2 shadow animate-pulse"
+                >
                   <div className="bg-blue-100 min-h-24 rounded"></div>
                   <div className="bg-blue-100 h-8 rounded"></div>
                 </div>
@@ -43,6 +62,7 @@ const Home = () => {
           : categoryData.map((c, index) => {
               return (
                 <div
+                  key={c._id + "displayCategory"}
                   className="w-full h-full"
                   onClick={() => handleRedirectProductListPage(c._id, c.name)}
                 >
