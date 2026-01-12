@@ -106,3 +106,34 @@ export const getProductController = async (req, res) => {
     });
   }
 };
+
+export const getProductByCategory = async (req, res) => {
+  try {
+    const { id } = req.body;
+
+    if (!id) {
+      return res.status(400).json({
+        message: "provide category id",
+        error: true,
+        success: false,
+      });
+    }
+
+    const product = await ProductModel.find({
+      category: { $in: id },
+    }).limit(15);
+
+    return res.json({
+      message: "category product list",
+      data: product,
+      error: false,
+      success: true,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message || err,
+      error: true,
+      success: false,
+    });
+  }
+};

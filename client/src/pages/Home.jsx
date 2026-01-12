@@ -4,6 +4,7 @@ import bannerMobile from "../assets/banner-mobile.jpg";
 import { useSelector } from "react-redux";
 import { ValideURLConvert } from "../utils/ValideURLConvert";
 import { useNavigate } from "react-router-dom";
+import CategoryWiseProductDisplay from "../components/CategoryWiseProductDisplay";
 
 const Home = () => {
   const loadingCategory = useSelector((state) => state.product.loadingCategory);
@@ -76,6 +77,17 @@ const Home = () => {
               );
             })}
       </div>
+
+      {/* Display Category wise */}
+      {categoryData.map((c, index) => {
+        return (
+          <CategoryWiseProductDisplay
+            key={c._id + "CategoryWiseProduct"}
+            id={c?._id}
+            name={c?.name}
+          />
+        );
+      })}
     </section>
   );
 };
