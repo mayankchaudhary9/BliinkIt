@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import AxiosToastError from "../utils/AxiosToastError";
 import Axios from "../utils/Axios";
 import SummaryApi from "../common/SummaryApi";
+import CardLoading from "./CardLoading";
 
 const CategoryWiseProductDisplay = ({ id, name }) => {
   const [data, setData] = useState([]);
@@ -42,7 +43,9 @@ const CategoryWiseProductDisplay = ({ id, name }) => {
           See All
         </Link>
       </div>
-      <div></div>
+      <div>
+        <CardLoading />
+      </div>
     </div>
   );
 };
