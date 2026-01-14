@@ -1,9 +1,15 @@
 import React from "react";
 import { DisplayPriceInRupee } from "../utils/DisplayPriceInRupee";
+import { Link } from "react-router-dom";
+import { ValideURLConvert } from "../utils/ValideURLConvert";
 
 const CardProduct = ({ data }) => {
+  const url = `/product/${ValideURLConvert(data.name)}-${data._id}`;
   return (
-    <div className="border p-4 grid gap-3 max-w-52 lg:min-w-52 rounded">
+    <Link
+      to={url}
+      className="border p-4 grid gap-3 max-w-52 lg:min-w-52 rounded"
+    >
       <div className="min-h-20 max-w-32 rounded">
         <img
           src={data.image[0]}
@@ -22,7 +28,7 @@ const CardProduct = ({ data }) => {
           <button>Add</button>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
