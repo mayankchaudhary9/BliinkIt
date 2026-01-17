@@ -9,9 +9,13 @@
   --color-secondary-100: #0b1a78;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: "Poppins", sans-serif;
   font-weight: 500;
   font-style: normal;
-  @apply bg-blue-50 text-neutral-700;
+  @apply bg-blue-50 text-neutral-700 scroll-smooth;
 }
