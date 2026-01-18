@@ -19,3 +19,7 @@ body {
   font-style: normal;
   @apply bg-blue-50 text-neutral-700 scroll-smooth;
 }
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
