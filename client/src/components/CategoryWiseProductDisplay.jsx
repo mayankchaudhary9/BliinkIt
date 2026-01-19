@@ -40,11 +40,11 @@ const CategoryWiseProductDisplay = ({ id, name }) => {
   }, []);
 
   const handleScrollRight = () => {
-    containerRef.current.scrollLeft += 400;
+    containerRef.current.scrollLeft += 200;
   };
 
   const handleScrollLeft = () => {
-    containerRef.current.scrollLeft -= 400;
+    containerRef.current.scrollLeft -= 200;
   };
 
   const loadingCardNumber = new Array(6).fill(null);
