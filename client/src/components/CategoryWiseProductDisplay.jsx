@@ -27,7 +27,6 @@ const CategoryWiseProductDisplay = ({ id, name }) => {
       if (responseData.success) {
         setData(responseData.data);
       }
-      console.log(responseData, "Dataa");
     } catch (error) {
       AxiosToastError(error);
     } finally {

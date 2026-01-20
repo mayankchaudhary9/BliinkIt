@@ -1,7 +1,23 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 
 const ProductListPage = () => {
-  return <div>ProductListPage</div>;
+  const params = useParams();
+
+  console.log(params);
+  return (
+    <section className="sticky top-24 lg:top-20">
+      <div className="container sticky top-24 mx-auto grid grid-cols-9 md:grid-cols-7 lg:grid-cols-5">
+        {/* sub Category */}
+        <div className="col-span-3 md:col-span-2 lg:col-span-1 min-h-[78vh]">
+          hello
+        </div>
+
+        {/* product */}
+        <div className="col-span-6 md:col-span-5 lg:col-span-4">heloo</div>
+      </div>
+    </section>
+  );
 };
 
 export default ProductListPage;
