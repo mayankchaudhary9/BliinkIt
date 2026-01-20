@@ -56,25 +56,28 @@ const CategoryWiseProductDisplay = ({ id, name }) => {
           See All
         </Link>
       </div>
-      <div
-        className="flex items-center gap-4 md:gap-6 lg:gap-8 container mx-auto px-4 overflow-x-scroll scrollbar-none scroll-smooth"
-        ref={containerRef}
-      >
-        {loading &&
-          loadingCardNumber.map((_, index) => {
+      <div className="relative flex items-center">
+        <div
+          className="flex gap-4 md:gap-6 lg:gap-8 container mx-auto px-4 overflow-x-scroll scrollbar-none scroll-smooth"
+          ref={containerRef}
+        >
+          {loading &&
+            loadingCardNumber.map((_, index) => {
+              return (
+                <CardLoading
+                  key={"CategorywiseProductDisplayLoading" + index}
+                />
+              );
+            })}
+          {data.map((p, index) => {
             return (
-              <CardLoading key={"CategorywiseProductDisplayLoading" + index} />
+              <CardProduct
+                data={p}
+                key={p._id + "CategorywiseProductDisplay" + index}
+              />
             );
           })}
-        {data.map((p, index) => {
-          return (
-            <CardProduct
-              data={p}
-              key={p._id + "CategorywiseProductDisplay" + index}
-            />
-          );
-        })}
-
+        </div>
         <div className="w-full left-0 right-0 container mx-auto px-2 absolute hidden lg:flex justify-between">
           <button
             onClick={handleScrollLeft}
