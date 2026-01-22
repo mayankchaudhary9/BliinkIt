@@ -137,3 +137,31 @@ export const getProductByCategory = async (req, res) => {
     });
   }
 };
+
+export const getProductByCategoryAndSubCategory = async (req, res) => {
+  try {
+    const { categoryId, subCategoryId, page, limit } = req.body;
+
+    if (!categoryId || !subCategoryId) {
+      return res.status(400).json({
+        message: "Provide category and subCategoryId",
+        error: true,
+        success: false,
+      });
+    }
+
+    if (!page) {
+      page = 1;
+    }
+
+    if (!limit) {
+      limit = 10;
+    }
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message || err,
+      error: true,
+      success: false,
+    });
+  }
+};
