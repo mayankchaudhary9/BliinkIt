@@ -157,6 +157,28 @@ export const getProductByCategoryAndSubCategory = async (req, res) => {
     if (!limit) {
       limit = 10;
     }
+
+    const query = {
+      category: { $in: categoryId },
+      subCategory: { $in: subCategoryId },
+    };
+
+    const skip = (page - 1) * limit;
+
+    const [data, dataCount] = await new Promise([
+      ProductModel.find(query).sort({ createdAt: -1 }).skip(skip).limit(limit),
+      ProductModel.countDocuments(query),
+    ]);
+
+    return res.json({
+      message: "Product list",
+      data: data,
+      totalCount: dataCount,
+      page: page,
+      limit: limit,
+      success: true,
+      error: false,
+    });
   } catch (error) {
     return res.status(500).json({
       message: error.message || err,
