@@ -1,26 +1,46 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Axios from "../utils/Axios";
 import SummaryApi from "../common/SummaryApi";
+import { useParams } from "react-router-dom";
+import AxiosToastError from "../utils/AxiosToastError";
 
 const ProductListPage = () => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [totalPage, setTotalpage] = useState(1);
+  const params = useParams();
 
   const fetchProductdata = async () => {
+    const categoryId = params.category.split("-").slice(-1)[0];
+    const subCategoryId = params.subCategory.split("-").slice(-1)[0];
     try {
+      setLoading(true);
       const response = await Axios({
         ...SummaryApi.getProductByCategoryAndSubCategory,
         data: {
-          categoryId,
-          subCategoryId,
+          categoryId: categoryId,
+          subCategoryId: subCategoryId,
           page: page,
           limit: 10,
         },
       });
-    } catch (error) {}
+
+      const { data: responseData } = response;
+
+      if (responseData.suucess) {
+        setData;
+      }
+    } catch (error) {
+      AxiosToastError(error);
+    } finally {
+      setLoading(false);
+    }
   };
+
+  useEffect(() => {
+    fetchProductdata();
+  }, [params]);
   return (
     <section className="sticky top-24 lg:top-20">
       <div className="container sticky top-24 mx-auto grid grid-cols-9 md:grid-cols-7 lg:grid-cols-5">
