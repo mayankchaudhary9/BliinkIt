@@ -8,7 +8,7 @@ const ProductListPage = () => {
   const [loading, setLoading] = useState(false);
   const [totalPage, setTotalpage] = useState(1);
 
-  const fetchProductdata = async() => {
+  const fetchProductdata = async () => {
     try {
       const response = await Axios({
         ...SummaryApi.getProductByCategoryAndSubCategory,
@@ -16,13 +16,11 @@ const ProductListPage = () => {
           categoryId,
           subCategoryId,
           page: page,
-          limit: 
-        }
-      })
-    } catch (error) {
-      
-    }
-  }
+          limit: 10,
+        },
+      });
+    } catch (error) {}
+  };
   return (
     <section className="sticky top-24 lg:top-20">
       <div className="container sticky top-24 mx-auto grid grid-cols-9 md:grid-cols-7 lg:grid-cols-5">
