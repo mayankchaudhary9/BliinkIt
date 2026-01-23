@@ -1,10 +1,28 @@
-import React from "react";
-import { useParams } from "react-router-dom";
+import React, { useState } from "react";
+import Axios from "../utils/Axios";
+import SummaryApi from "../common/SummaryApi";
 
 const ProductListPage = () => {
-  const params = useParams();
+  const [data, setData] = useState([]);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [totalPage, setTotalpage] = useState(1);
 
-  console.log(params);
+  const fetchProductdata = async() => {
+    try {
+      const response = await Axios({
+        ...SummaryApi.getProductByCategoryAndSubCategory,
+        data: {
+          categoryId,
+          subCategoryId,
+          page: page,
+          limit: 
+        }
+      })
+    } catch (error) {
+      
+    }
+  }
   return (
     <section className="sticky top-24 lg:top-20">
       <div className="container sticky top-24 mx-auto grid grid-cols-9 md:grid-cols-7 lg:grid-cols-5">
