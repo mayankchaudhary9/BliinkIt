@@ -72,7 +72,7 @@ const ProductListPage = () => {
     <section className="sticky top-24 lg:top-20">
       <div className="container sticky top-24 mx-auto grid grid-cols-9 md:grid-cols-7 lg:grid-cols-5">
         {/* sub Category */}
-        <div className="col-span-3 md:col-span-2 lg:col-span-1 min-h-[79vh] max-h-[79vh] overflow-y-scroll grid gap-1 shadow-md scrollbarCustom bg-white py-2">
+        <div className="col-span-3 md:col-span-2 lg:col-span-1 min-h-[88vh] max-h-[88vh] overflow-y-scroll grid gap-1 shadow-md scrollbarCustom bg-white py-2">
           {displaySubCategory.map((s, index) => {
             const link = `/${ValideURLConvert(s?.category[0]?.name)}-${s?.category[0]?._id}/${ValideURLConvert(
               s.name,
@@ -100,20 +100,22 @@ const ProductListPage = () => {
         </div>
 
         {/* product */}
-        <div className="col-span-6 md:col-span-5 lg:col-span-4">
-          <div className="bg-white shadow-md p-4">
+        <div className="col-span-6 md:col-span-5 lg:col-span-4 sticky top-20">
+          <div className="bg-white shadow-md p-4 z-10">
             <h3 className="font-semibold">{subCategoryName}</h3>
           </div>
           <div>
-            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 p-4 gap-4">
-              {data.map((p, index) => {
-                return (
-                  <CardProduct
-                    data={p}
-                    key={p._id + "productSubCategory" + index}
-                  />
-                );
-              })}
+            <div className="min-h-[80vh] max-h-[80vh] overflow-y-auto relative">
+              <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 p-4 gap-4">
+                {data.map((p, index) => {
+                  return (
+                    <CardProduct
+                      data={p}
+                      key={p._id + "productSubCategory" + index}
+                    />
+                  );
+                })}
+              </div>
             </div>
             {loading && <Loading />}
           </div>
