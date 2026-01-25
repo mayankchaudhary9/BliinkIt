@@ -46,7 +46,7 @@ const CategoryWiseProductDisplay = ({ id, name }) => {
     containerRef.current.scrollLeft -= 200;
   };
 
-  const loadingCardNumber = new Array(6).fill(null);
+  const loadingCardNumber = new Array(7).fill(null);
   return (
     <div>
       <div className="container mx-auto p-4 flex items-center justify-between gap-4">
