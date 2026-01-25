@@ -6,6 +6,8 @@ import AxiosToastError from "../utils/AxiosToastError";
 import Loading from "../components/Loading";
 import CardProduct from "../components/CardProduct";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { ValideURLConvert } from "../utils/ValideURLConvert";
 
 const ProductListPage = () => {
   const [data, setData] = useState([]);
@@ -70,19 +72,29 @@ const ProductListPage = () => {
     <section className="sticky top-24 lg:top-20">
       <div className="container sticky top-24 mx-auto grid grid-cols-9 md:grid-cols-7 lg:grid-cols-5">
         {/* sub Category */}
-        <div className="col-span-3 md:col-span-2 lg:col-span-1 min-h-[79vh] max-h-[79vh] overflow-y-scroll grid gap-1 shadow-md scrollbarCustom">
+        <div className="col-span-3 md:col-span-2 lg:col-span-1 min-h-[79vh] max-h-[79vh] overflow-y-scroll grid gap-1 shadow-md scrollbarCustom bg-white py-2">
           {displaySubCategory.map((s, index) => {
+            const link = `/${ValideURLConvert(s?.category[0]?.name)}-${s?.category[0]?._id}/${ValideURLConvert(
+              s.name,
+            )}-${s._id}`;
             return (
-              <div className="w-full p-2 bg-white">
-                <div className="w-fit mx-auto">
+              <Link
+                to={link}
+                className={`w-full p-2 lg:flex items-center lg:w-full lg:h-16 box-border lg:gap-4 border-b hover:bg-green-100 cursor-pointer 
+                  ${subCategoryId === s._id ? "bg-green-100" : ""} 
+                `}
+              >
+                <div className="w-fit max-w-28 mx-auto lg:mx-0 bg-white rounded box-border">
                   <img
                     src={s.image}
                     alt="subCategory"
-                    className="w-14 h-full object-scale-down"
+                    className="w-14 lg:h-14 lg:w-12 h-full object-scale-down"
                   />
                 </div>
-                <p className="-mt-6 text-xs text-center">{s.name}</p>
-              </div>
+                <p className="-mt-6 lg:mt-0 text-xs text-center lg:text-left lg:text-base">
+                  {s.name}
+                </p>
+              </Link>
             );
           })}
         </div>
