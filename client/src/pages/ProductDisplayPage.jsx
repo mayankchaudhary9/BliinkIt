@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import AxiosToastError from "../utils/AxiosToastError";
 import Axios from "../utils/Axios";
 import SummaryApi from "../common/SummaryApi";
+import { Fa0, FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 
 const ProductDisplayPage = () => {
   const params = useParams();
@@ -75,8 +76,13 @@ const ProductDisplayPage = () => {
               );
             })}
           </div>
-          <div>
-            <button></button>
+          <div className="w-full h-full flex justify-between absolute">
+            <button>
+              <FaAngleLeft />
+            </button>
+            <button>
+              <FaAngleRight />
+            </button>
           </div>
         </div>
       </div>
