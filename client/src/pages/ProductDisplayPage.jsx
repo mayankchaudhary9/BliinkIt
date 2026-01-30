@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import AxiosToastError from "../utils/AxiosToastError";
 import Axios from "../utils/Axios";
@@ -14,6 +14,7 @@ const ProductDisplayPage = () => {
   });
   const [image, setImage] = useState(0);
   const [loading, setLoading] = useState(false);
+  const imageContainer = useRef();
 
   const fetchProductDetails = async () => {
     try {
@@ -39,6 +40,13 @@ const ProductDisplayPage = () => {
   useEffect(() => {
     fetchProductDetails();
   }, [params]);
+
+  const handleScrollRight = () => {
+    imageContainer.current.scrollLeft += 100;
+  };
+  const handleScrollLeft = () => {
+    imageContainer.current.scrollLeft -= 100;
+  };
   return (
     <section className="container mx-auto p-4 grid lg:grid-cols-2">
       <div className="">
@@ -59,7 +67,10 @@ const ProductDisplayPage = () => {
           })}
         </div>
         <div className="grid relative">
-          <div className="flex gap-4 z-10 relative w-full overflow-x-auto scrollbar-none">
+          <div
+            ref={imageContainer}
+            className="flex gap-4 z-10 relative w-full overflow-x-auto scrollbar-none"
+          >
             {data.image.map((img, index) => {
               return (
                 <div
