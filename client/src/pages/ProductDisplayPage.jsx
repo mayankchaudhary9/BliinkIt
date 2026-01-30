@@ -59,7 +59,7 @@ const ProductDisplayPage = () => {
           })}
         </div>
         <div className="grid relative">
-          <div className="flex gap-4 w-full overflow-x-auto scrollbar-none">
+          <div className="flex gap-4 z-10 relative w-full overflow-x-auto scrollbar-none">
             {data.image.map((img, index) => {
               return (
                 <div
@@ -76,11 +76,11 @@ const ProductDisplayPage = () => {
               );
             })}
           </div>
-          <div className="w-full h-full flex justify-between absolute">
-            <button>
+          <div className="w-full -ml-3 h-full flex justify-between absolute items-center">
+            <button className="z-10 bg-white relative p-1 rounded-full shadow-lg">
               <FaAngleLeft />
             </button>
-            <button>
+            <button className="z-10 bg-white relative p-1 rounded-full shadow-lg">
               <FaAngleRight />
             </button>
           </div>
