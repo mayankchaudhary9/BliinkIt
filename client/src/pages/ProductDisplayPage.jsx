@@ -4,6 +4,8 @@ import AxiosToastError from "../utils/AxiosToastError";
 import Axios from "../utils/Axios";
 import SummaryApi from "../common/SummaryApi";
 import { Fa0, FaAngleLeft, FaAngleRight } from "react-icons/fa6";
+import { DisplayPriceInRupee } from "../utils/DisplayPriceInRupee";
+import Divider from "../components/Divider";
 
 const ProductDisplayPage = () => {
   const params = useParams();
@@ -103,8 +105,25 @@ const ProductDisplayPage = () => {
           </div>
         </div>
       </div>
-      <div className="p-4">
+
+      <div className="p-4 lg:p-7 text-base lg:text-lg">
+        <p className="bg-green-300 w-fit px-2 rounded-full">10 min</p>
         <h2 className="text-lg font-semibold lg:text-3xl">{data.name}</h2>
+        <p className="">{data.unit}</p>
+        <Divider />
+        <div>
+          <p className="">Price</p>
+          <div className="border border-green-600 px-4 py-2 rounded bg-green-50 w-fit">
+            <p className="font-semibold text-lg lg:text-xl">
+              {DisplayPriceInRupee(data.price)}
+            </p>
+          </div>
+        </div>
+
+        <button className="my-4 px-4 py-1 bg-green-600 hover:bg-green-700 text-white rounded">
+          Add
+        </button>
+        <Divider />
       </div>
     </section>
   );
