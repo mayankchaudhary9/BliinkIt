@@ -6,6 +6,9 @@ import SummaryApi from "../common/SummaryApi";
 import { Fa0, FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 import { DisplayPriceInRupee } from "../utils/DisplayPriceInRupee";
 import Divider from "../components/Divider";
+import image1 from "../assets/minute_delivery.png";
+import image2 from "../assets/Best_Prices_Offers.png";
+import image3 from "../assets/Wide_Assortment.png";
 
 const ProductDisplayPage = () => {
   const params = useParams();
@@ -104,6 +107,7 @@ const ProductDisplayPage = () => {
             </button>
           </div>
         </div>
+        <div>{}</div>
       </div>
 
       <div className="p-4 lg:p-7 text-base lg:text-lg">
@@ -120,10 +124,47 @@ const ProductDisplayPage = () => {
           </div>
         </div>
 
-        <button className="my-4 px-4 py-1 bg-green-600 hover:bg-green-700 text-white rounded">
-          Add
-        </button>
-        <Divider />
+        {data.stock === 0 ? (
+          <p className="text-lg text-red-500">Out of Stock</p>
+        ) : (
+          <button className="my-4 px-4 py-1 bg-green-600 hover:bg-green-700 text-white rounded">
+            Add
+          </button>
+        )}
+
+        <h2 className="font-semibold">Why shop from bliinkIt?. </h2>
+        <div>
+          <div className="flex items-center gap-4 my-4">
+            <img src={image1} alt="superfast delivery" className="w-20 h-20" />
+            <div className="text-sm">
+              <div className="font-semibold">Superfast Delivery</div>
+              <p>
+                Get your order delivered to your doorstep at the earliest from
+                dark stores near you.
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-4 my-4">
+            <img src={image2} alt="Best prices offers" className="w-20 h-20" />
+            <div className="text-sm">
+              <div className="font-semibold">Best Prices & Offers</div>
+              <p>
+                Best price destination with offers directly from the
+                manufacturers.
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-4 my-4">
+            <img src={image3} alt="Wide Assortment" className="w-20 h-20" />
+            <div className="text-sm">
+              <div className="font-semibold">Wide Assortment</div>
+              <p>
+                Choose from 5000+ products across food personal care, household
+                & other categories.
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );
