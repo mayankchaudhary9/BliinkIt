@@ -88,16 +88,24 @@ const ProductDisplayPage = () => {
             })}
           </div>
           <div className="w-full -ml-3 h-full flex justify-between absolute items-center">
-            <button className="z-10 bg-white relative p-1 rounded-full shadow-lg">
+            <button
+              onClick={handleScrollLeft}
+              className="z-10 bg-white relative p-1 rounded-full shadow-lg"
+            >
               <FaAngleLeft />
             </button>
-            <button className="z-10 bg-white relative p-1 rounded-full shadow-lg">
+            <button
+              onClick={handleScrollRight}
+              className="z-10 bg-white relative p-1 rounded-full shadow-lg"
+            >
               <FaAngleRight />
             </button>
           </div>
         </div>
       </div>
-      <div></div>
+      <div className="p-4">
+        <h2 className="text-lg font-semibold lg:text-3xl">{data.name}</h2>
+      </div>
     </section>
   );
 };
