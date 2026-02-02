@@ -17,7 +17,7 @@ const ProductCardAdmin = ({ data }) => {
       <p className="text-slate-400">{data?.unit}</p>
       <div className="grid grid-cols-2 gap-3 py-2">
         <button
-          onClick={() => setEditOpen()}
+          onClick={() => setEditOpen(true)}
           className="border px-1 py-1 text-sm border-green-600 bg-green-100 text-green-800 hover:bg-green-200 rounded"
         >
           Edit
