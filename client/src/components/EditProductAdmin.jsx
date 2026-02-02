@@ -15,6 +15,7 @@ import successAlert from "../utils/SuccessAlert";
 
 const EditProductAdmin = ({ close, data: propsData }) => {
   const [data, setData] = useState({
+    _id: propsData._id,
     name: propsData.name,
     image: propsData.image,
     category: propsData.category,
@@ -113,7 +114,7 @@ const EditProductAdmin = ({ close, data: propsData }) => {
     console.log(data, "data");
     try {
       const response = await Axios({
-        ...SummaryApi.createProduct,
+        ...SummaryApi.updateProductDetails,
         data: data,
       });
 
@@ -435,7 +436,7 @@ const EditProductAdmin = ({ close, data: propsData }) => {
                 Add Fields
               </div>
               <button className="bg-primary-100 hover:bg-primary-200 py-2 rounded font-semibold">
-                Submit
+                Update Product
               </button>
             </form>
           </div>

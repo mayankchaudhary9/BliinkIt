@@ -94,8 +94,12 @@ const SummaryApi = {
     method: "post",
   },
   getProductDetails: {
-    url: "api/product/get-product-details",
+    url: "/api/product/get-product-details",
     method: "post",
+  },
+  updateProductDetails: {
+    url: "/api/product/update-product-details",
+    method: "put",
   },
 };
 
