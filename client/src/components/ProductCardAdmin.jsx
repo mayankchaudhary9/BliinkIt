@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import EditProductAdmin from "./EditProductAdmin";
 
-const ProductCardAdmin = ({ data }) => {
+const ProductCardAdmin = ({ data, fetchProductData }) => {
   const [editOpen, setEditOpen] = useState(false);
 
   return (
@@ -28,7 +28,11 @@ const ProductCardAdmin = ({ data }) => {
       </div>
 
       {editOpen && (
-        <EditProductAdmin data={data} close={() => setEditOpen(false)} />
+        <EditProductAdmin
+          fetchProductData={fetchProductData}
+          data={data}
+          close={() => setEditOpen(false)}
+        />
       )}
     </div>
   );

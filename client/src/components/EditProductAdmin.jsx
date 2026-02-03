@@ -13,7 +13,7 @@ import AxiosToastError from "../utils/AxiosToastError";
 import toast from "react-hot-toast";
 import successAlert from "../utils/SuccessAlert";
 
-const EditProductAdmin = ({ close, data: propsData }) => {
+const EditProductAdmin = ({ close, data: propsData, fetchProductData }) => {
   const [data, setData] = useState({
     _id: propsData._id,
     name: propsData.name,
@@ -122,6 +122,10 @@ const EditProductAdmin = ({ close, data: propsData }) => {
 
       if (responseData.success) {
         successAlert(responseData.message);
+        if (close) {
+          close();
+        }
+        fetchProductData();
         setData({
           name: "",
           image: [],
