@@ -10,7 +10,7 @@ const SearchPage = () => {
       <div className="container mx-auto p-4">
         <p className="font-semibold">Search Results: {data.length}</p>
 
-        <div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 py-4 gap-4">
           {/* loading data */}
           {loading &&
             loadingArrayCard.map((_, index) => {
