@@ -312,6 +312,7 @@ export const searchProduct = async (req, res) => {
       success: true,
       data: data,
       totalCount: dataCount,
+      totalPage: Math.ceil(dataCount / limit),
       page: page,
       limit: limit,
     });

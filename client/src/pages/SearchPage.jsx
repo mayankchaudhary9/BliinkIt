@@ -1,10 +1,33 @@
 import React, { useState } from "react";
 import CardLoading from "../components/CardLoading";
+import SummaryApi from "../common/SummaryApi";
+import Axios from "../utils/Axios";
+import AxiosToastError from "../utils/AxiosToastError";
 
 const SearchPage = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const loadingArrayCard = new Array(10).fill(null);
+  const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(1);
+
+  const fetchData = async () => {
+    try {
+      const response = await Axios({
+        ...SummaryApi.searchProduct,
+        data: {
+          search: "",
+        },
+      });
+
+      const { data: responseData } = response;
+
+      if (responseData.success) {
+      }
+    } catch (error) {
+      AxiosToastError(error);
+    }
+  };
   return (
     <section className="bg-white">
       <div className="container mx-auto p-4">
