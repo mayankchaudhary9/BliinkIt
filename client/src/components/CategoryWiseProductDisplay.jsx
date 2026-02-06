@@ -6,11 +6,15 @@ import SummaryApi from "../common/SummaryApi";
 import CardLoading from "./CardLoading";
 import CardProduct from "./CardProduct";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
+import { ValideURLConvert } from "../utils/ValideURLConvert";
+import { useSelector } from "react-redux";
 
 const CategoryWiseProductDisplay = ({ id, name }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const containerRef = useRef();
+  const subCategoryData = useSelector((state) => state.product.allSubCategory);
+  const loadingCardNumber = new Array(7).fill(null);
 
   const fetchCategoryWiseProduct = async () => {
     try {
@@ -46,14 +50,31 @@ const CategoryWiseProductDisplay = ({ id, name }) => {
     containerRef.current.scrollLeft -= 200;
   };
 
-  const loadingCardNumber = new Array(7).fill(null);
+  const handleRedirectProductListPage = () => {
+    if (!subCategoryData?.length || !id || !name) return null;
+
+    const subCategory = subCategoryData.find((sub) =>
+      sub.category?.some((el) => el._id === id),
+    );
+
+    if (!subCategory) return null;
+
+    return `/${ValideURLConvert(name)}-${id}/${ValideURLConvert(
+      subCategory.name,
+    )}-${subCategory._id}`;
+  };
+
+  const redirect = handleRedirectProductListPage();
+
   return (
     <div>
       <div className="container mx-auto p-4 flex items-center justify-between gap-4">
         <h3 className="font-semibold text-lg md:text-xl">{name}</h3>
-        <Link to="" className="text-green-600 hover:text-green-400">
-          See All
-        </Link>
+        {redirect && (
+          <Link to={redirect} className="text-green-600 hover:text-green-400">
+            See All
+          </Link>
+        )}
       </div>
       <div className="relative flex items-center">
         <div
