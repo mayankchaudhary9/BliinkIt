@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CardLoading from "../components/CardLoading";
 import SummaryApi from "../common/SummaryApi";
 import Axios from "../utils/Axios";
 import AxiosToastError from "../utils/AxiosToastError";
 import CardProduct from "../components/CardProduct";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const SearchPage = () => {
   const [data, setData] = useState([]);
@@ -19,6 +20,7 @@ const SearchPage = () => {
         ...SummaryApi.searchProduct,
         data: {
           search: "",
+          page: page,
         },
       });
 
@@ -40,24 +42,39 @@ const SearchPage = () => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchData();
+  }, [page]);
+
+  const handleFetchMore = () => {
+    if (totalPage > page) {
+      setPage((prev) => prev + 1);
+    }
+  };
   return (
     <section className="bg-white">
       <div className="container mx-auto p-4">
         <p className="font-semibold">Search Results: {data.length}</p>
-
-        <div className="grid grid-cols-1 smd:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 py-4 gap-4">
-          {data.map((p, index) => {
-            return (
-              <CardProduct data={p} key={p?._id + "searchProduct" + index} />
-            );
-          })}
-
-          {/* loading data */}
-          {loading &&
-            loadingArrayCard.map((_, index) => {
-              return <CardLoading key={"loadingsearchpage" + index} />;
+        <InfiniteScroll
+          dataLength={data.length}
+          hasMore={true}
+          next={handleFetchMore}
+        >
+          <div className="grid grid-cols-1 smd:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 py-4 gap-4">
+            {data.map((p, index) => {
+              return (
+                <CardProduct data={p} key={p?._id + "searchProduct" + index} />
+              );
             })}
-        </div>
+
+            {/* loading data */}
+            {loading &&
+              loadingArrayCard.map((_, index) => {
+                return <CardLoading key={"loadingsearchpage" + index} />;
+              })}
+          </div>
+        </InfiniteScroll>
       </div>
     </section>
   );
