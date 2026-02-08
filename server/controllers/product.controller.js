@@ -278,7 +278,7 @@ export const deleteProductDetails = async (req, res) => {
 
 export const searchProduct = async (req, res) => {
   try {
-    const { search, page, limit } = req.body;
+    let { search, page, limit } = req.body;
 
     if (!page) {
       page = 1;
