@@ -298,8 +298,8 @@ export const searchProduct = async (req, res) => {
     const skip = (page - 1) * limit;
 
     const [data, dataCount] = await Promise.all([
-      (await ProductModel.find(query))
-        .toSorted({ createdAt: -1 })
+      ProductModel.find(query)
+        .sort({ createdAt: -1 })
         .skip(skip)
         .limit(limit)
         .populate("category subCategory"),
