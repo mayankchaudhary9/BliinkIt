@@ -5,6 +5,7 @@ import Axios from "../utils/Axios";
 import AxiosToastError from "../utils/AxiosToastError";
 import CardProduct from "../components/CardProduct";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { useLocation } from "react-router-dom";
 
 const SearchPage = () => {
   const [data, setData] = useState([]);
@@ -12,6 +13,8 @@ const SearchPage = () => {
   const loadingArrayCard = new Array(10).fill(null);
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
+  const params = useLocation();
+  const searchText = params?.search?.slice(3);
 
   const fetchData = async () => {
     try {
@@ -19,7 +22,7 @@ const SearchPage = () => {
       const response = await Axios({
         ...SummaryApi.searchProduct,
         data: {
-          search: "",
+          search: searchText,
           page: page,
         },
       });

@@ -60,8 +60,8 @@ const CategoryWiseProductDisplay = ({ id, name }) => {
     if (!subCategory) return null;
 
     return `/${ValideURLConvert(name)}-${id}/${ValideURLConvert(
-      subCategory.name,
-    )}-${subCategory._id}`;
+      subCategory?.name,
+    )}-${subCategory?._id}`;
   };
 
   const redirect = handleRedirectProductListPage();

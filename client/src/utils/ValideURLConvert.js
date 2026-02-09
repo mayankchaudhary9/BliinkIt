@@ -2,7 +2,7 @@ import React from "react";
 
 export const ValideURLConvert = (name) => {
   const URL = name
-    .toString()
+    ?.toString()
     .replaceAll(" ", "-")
     .replaceAll(",", "-")
     .replaceAll("&", "-");
