@@ -33,8 +33,8 @@ function App() {
       if (responseData.success) {
         dispatch(
           setAllCategory(
-            responseData.data.sort((a, b) => a.name.localeCompare(b.name))
-          )
+            responseData.data.sort((a, b) => a.name.localeCompare(b.name)),
+          ),
         );
       }
     } catch (error) {
@@ -54,15 +54,15 @@ function App() {
       if (responseData.success) {
         dispatch(
           setAllSubCategory(
-            responseData.data.sort((a, b) => a.name.localeCompare(b.name))
-          )
+            responseData.data.sort((a, b) => a.name.localeCompare(b.name)),
+          ),
         );
       }
     } catch (error) {
       console.log(error);
     }
   };
-
+  /////   7:12:00
   useEffect(() => {
     fetchUser();
     fetchCategory();
