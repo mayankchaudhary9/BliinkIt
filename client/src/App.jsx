@@ -14,6 +14,7 @@ import {
 } from "./app/productSlice";
 import Axios from "./utils/Axios";
 import SummaryApi from "./common/SummaryApi";
+import { handleAddItemCart } from "./app/cartProduct";
 
 function App() {
   const dispatch = useDispatch();
@@ -62,11 +63,27 @@ function App() {
       console.log(error);
     }
   };
-  /////   7:12:00
+
+  const fetchCartItem = async () => {
+    try {
+      const response = await Axios({
+        ...SummaryApi.getCartItem,
+      });
+
+      const { data: responseData } = response;
+
+      if (responseData.success) {
+        dispatch(handleAddItemCart(responseData.data));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
     fetchUser();
     fetchCategory();
     fetchSubCategory();
+    fetchCartItem();
   }, []);
   return (
     <>
