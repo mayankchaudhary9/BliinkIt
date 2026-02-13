@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import logo from "../assets/logo.png";
 import Search from "./Search";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import { GoTriangleDown, GoTriangleUp } from "react-icons/go";
 import { useState } from "react";
 import UserMenu from "./UserMenu";
+import { DisplayPriceInRupee } from "../utils/DisplayPriceInRupee";
 
 const Header = () => {
   const [isMobile] = useMobile();
@@ -17,6 +18,9 @@ const Header = () => {
   const navigate = useNavigate();
   const user = useSelector((state) => state?.user);
   const [openUserMenu, setOpenUserMenu] = useState(false);
+  const cartItem = useSelector((state) => state.cartItem.cart);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [totalQty, setTotalQty] = useState(0);
 
   const redirectToLoginPage = () => {
     navigate("/login");
@@ -33,6 +37,10 @@ const Header = () => {
     }
     navigate("/user");
   };
+
+  //total item and total price
+  useEffect(() => {}, [cartItem]);
+
   return (
     <header className="h-24 lg:h-20 lg:shadow-md sticky top-0 z-40 flex flex-col justify-center gap-1 bg-white">
       {!(isSearchPage && isMobile) && (
@@ -105,7 +113,14 @@ const Header = () => {
                   <BsCart4 size={26} />
                 </div>
                 <div className="font-semibold">
-                  <p>My Cart</p>
+                  {cartItem[0] ? (
+                    <div>
+                      <p>{totalQty} Items</p>
+                      <p>{DisplayPriceInRupee(totalPrice)}</p>
+                    </div>
+                  ) : (
+                    <p>My Cart</p>
+                  )}
                 </div>
               </button>
             </div>
