@@ -7,10 +7,12 @@ import AxiosToastError from "../utils/AxiosToastError";
 import Axios from "../utils/Axios";
 import SummaryApi from "../common/SummaryApi";
 import toast from "react-hot-toast";
+import { useGlobalContext } from "../provider/GlobalProvider";
 
 const CardProduct = ({ data }) => {
   const url = `/product/${ValideURLConvert(data.name)}-${data._id}`;
   const [loading, setLoading] = useState(false);
+  const { fetchCartItem } = useGlobalContext();
 
   const handleAddToCart = async (e) => {
     // for stopping redirect after click on add button
@@ -30,6 +32,9 @@ const CardProduct = ({ data }) => {
 
       if (responseData.success) {
         toast.success(responseData.message);
+        if (fetchCartItem) {
+          fetchCartItem();
+        }
       }
     } catch (error) {
       AxiosToastError(error);
