@@ -13,6 +13,7 @@ const AddToCartButton = ({ data }) => {
   const { fetchCartItem } = useGlobalContext();
   const cartItem = useSelector((state) => state.cartItem.cart);
   const [itemSelected, setItemSelected] = useState(false);
+  const [qty, setQty] = useState(0);
 
   const handleAddToCart = async (e) => {
     // for stopping redirect after click on add button
@@ -49,16 +50,35 @@ const AddToCartButton = ({ data }) => {
       (item) => item.productId._id === data._id,
     );
     setItemSelected(checkingItem);
+
+    const product = cartItem.find((item) => item.productId._id === data._id);
+    setQty(product?.quantity);
   }, [data, cartItem]);
+
+  const increaseQty = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
+  const decreaseQty = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
   return (
-    <div>
+    <div className="w-full max-w-[150px]">
       {itemSelected ? (
-        <div>
-          <button>
+        <div className="flex">
+          <button
+            onClick={decreaseQty}
+            className="bg-green-600 hover:bg-green-700 text-white flex-1 w-full"
+          >
             <FaMinus />
           </button>
-          <p></p>
-          <button>
+          <p className="flex-1 w-full">{qty}</p>
+          <button
+            onClick={increaseQty}
+            className="bg-green-600 hover:bg-green-700 text-white flex-1 w-full"
+          >
             <FaPlus />
           </button>
         </div>
