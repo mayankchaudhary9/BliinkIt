@@ -2,11 +2,11 @@ import React from "react";
 
 const Loading = () => {
   return (
-    <div className="flex justify-center items-center p-8">
+    <div className="flex justify-center items-center">
       <div role="status">
         <svg
           aria-hidden="true"
-          class="w-8 h-8 text-neutral-tertiary animate-spin fill-primary-200"
+          class="w-5 h-5 text-neutral-tertiary animate-spin fill-primary-200"
           viewBox="0 0 100 101"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"

@@ -1,47 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import { DisplayPriceInRupee } from "../utils/DisplayPriceInRupee";
 import { Link } from "react-router-dom";
 import { ValideURLConvert } from "../utils/ValideURLConvert";
 import { priceWithDiscount } from "../utils/PriceWithDiscount";
-import AxiosToastError from "../utils/AxiosToastError";
-import Axios from "../utils/Axios";
-import SummaryApi from "../common/SummaryApi";
-import toast from "react-hot-toast";
-import { useGlobalContext } from "../provider/GlobalProvider";
+import AddToCartButton from "./AddToCartButton";
 
 const CardProduct = ({ data }) => {
   const url = `/product/${ValideURLConvert(data.name)}-${data._id}`;
-  const [loading, setLoading] = useState(false);
-  const { fetchCartItem } = useGlobalContext();
 
-  const handleAddToCart = async (e) => {
-    // for stopping redirect after click on add button
-    e.preventDefault();
-    e.stopPropagation();
-    try {
-      setLoading(true);
-
-      const response = await Axios({
-        ...SummaryApi.addTocart,
-        data: {
-          productId: data?._id,
-        },
-      });
-
-      const { data: responseData } = response;
-
-      if (responseData.success) {
-        toast.success(responseData.message);
-        if (fetchCartItem) {
-          fetchCartItem();
-        }
-      }
-    } catch (error) {
-      AxiosToastError(error);
-    } finally {
-      setLoading(false);
-    }
-  };
   return (
     <Link
       to={url}
@@ -80,12 +46,7 @@ const CardProduct = ({ data }) => {
           {data.stock == 0 ? (
             <p className="text-red-500 text-sm text-center">Out of stock</p>
           ) : (
-            <button
-              onClick={handleAddToCart}
-              className="bg-green-600 hover:bg-green-700 text-white px-2 lg:px-4 py-1 rounded"
-            >
-              Add
-            </button>
+            <AddToCartButton data={data} />
           )}
         </div>
       </div>
