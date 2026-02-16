@@ -10,10 +10,11 @@ import { FaMinus, FaPlus } from "react-icons/fa6";
 
 const AddToCartButton = ({ data }) => {
   const [loading, setLoading] = useState(false);
-  const { fetchCartItem } = useGlobalContext();
+  const { fetchCartItem, updateCartItem } = useGlobalContext();
   const cartItem = useSelector((state) => state.cartItem.cart);
   const [itemSelected, setItemSelected] = useState(false);
   const [qty, setQty] = useState(0);
+  const [cartItemDetails, setCartItemDetails] = useState();
 
   const handleAddToCart = async (e) => {
     // for stopping redirect after click on add button
@@ -53,16 +54,21 @@ const AddToCartButton = ({ data }) => {
 
     const product = cartItem.find((item) => item.productId._id === data._id);
     setQty(product?.quantity);
+    setCartItemDetails(product);
   }, [data, cartItem]);
 
   const increaseQty = (e) => {
     e.preventDefault();
     e.stopPropagation();
+
+    updateCartItem(cartItemDetails?._id, qty + 1);
   };
 
   const decreaseQty = (e) => {
     e.preventDefault();
     e.stopPropagation();
+
+    updateCartItem(cartItemDetails?._id, qty - 1);
   };
   return (
     <div className="w-full max-w-[150px]">
@@ -70,14 +76,14 @@ const AddToCartButton = ({ data }) => {
         <div className="flex">
           <button
             onClick={decreaseQty}
-            className="bg-green-600 hover:bg-green-700 text-white flex-1 w-full"
+            className="bg-green-600 hover:bg-green-700 text-white flex-1 w-full p-1 rounded"
           >
             <FaMinus />
           </button>
-          <p className="flex-1 w-full">{qty}</p>
+          <p className="flex-1 w-full font-semibold px-1">{qty}</p>
           <button
             onClick={increaseQty}
-            className="bg-green-600 hover:bg-green-700 text-white flex-1 w-full"
+            className="bg-green-600 hover:bg-green-700 text-white flex-1 w-full p-1 rounded"
           >
             <FaPlus />
           </button>
