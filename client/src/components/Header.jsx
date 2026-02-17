@@ -117,7 +117,7 @@ const Header = () => {
                   Login
                 </button>
               )}
-              <button className="flex items-center gap-2 bg-green-800 hover:bg-green-700 px-3 py-3 rounded text-white">
+              <button className="flex items-center gap-2 bg-green-800 hover:bg-green-700 px-3 py-2 rounded text-white">
                 {/* add to card icons */}
                 <div className="animate-bounce">
                   <BsCart4 size={26} />

@@ -10,7 +10,7 @@ import { FaMinus, FaPlus } from "react-icons/fa6";
 
 const AddToCartButton = ({ data }) => {
   const [loading, setLoading] = useState(false);
-  const { fetchCartItem, updateCartItem } = useGlobalContext();
+  const { fetchCartItem, updateCartItem, deleteCartItem } = useGlobalContext();
   const cartItem = useSelector((state) => state.cartItem.cart);
   const [itemSelected, setItemSelected] = useState(false);
   const [qty, setQty] = useState(0);
@@ -67,23 +67,28 @@ const AddToCartButton = ({ data }) => {
   const decreaseQty = (e) => {
     e.preventDefault();
     e.stopPropagation();
-
-    updateCartItem(cartItemDetails?._id, qty - 1);
+    if (qty === 1) {
+      deleteCartItem(cartItemDetails?._id);
+    } else {
+      updateCartItem(cartItemDetails?._id, qty - 1);
+    }
   };
   return (
     <div className="w-full max-w-[150px]">
       {itemSelected ? (
-        <div className="flex">
+        <div className="flex w-full h-full">
           <button
             onClick={decreaseQty}
-            className="bg-green-600 hover:bg-green-700 text-white flex-1 w-full p-1 rounded"
+            className="bg-green-600 hover:bg-green-700 text-white flex-1 w-full p-1 rounded flex items-center justify-center"
           >
             <FaMinus />
           </button>
-          <p className="flex-1 w-full font-semibold px-1">{qty}</p>
+          <p className="flex-1 w-full font-semibold px-1 flex items-center justify-center">
+            {qty}
+          </p>
           <button
             onClick={increaseQty}
-            className="bg-green-600 hover:bg-green-700 text-white flex-1 w-full p-1 rounded"
+            className="bg-green-600 hover:bg-green-700 text-white flex-1 w-full p-1 rounded flex items-center justify-center"
           >
             <FaPlus />
           </button>
