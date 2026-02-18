@@ -15,6 +15,8 @@ import {
 import Axios from "./utils/Axios";
 import SummaryApi from "./common/SummaryApi";
 import GlobalProvider from "./provider/GlobalProvider";
+import { BsCart4 } from "react-icons/bs";
+import CartMobileLink from "./components/CartMobile";
 
 function App() {
   const dispatch = useDispatch();
@@ -77,6 +79,9 @@ function App() {
       </main>
       <Footer />
       <Toaster />
+      <div className="sticky bottom-4 p-2">
+        <CartMobileLink />
+      </div>
     </GlobalProvider>
   );
 }
