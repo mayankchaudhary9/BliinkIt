@@ -5,6 +5,7 @@ import SummaryApi from "../common/SummaryApi";
 import { handleAddItemCart } from "../app/cartProduct";
 import AxiosToastError from "../utils/AxiosToastError";
 import toast from "react-hot-toast";
+import { priceWithDiscount } from "../utils/PriceWithDiscount";
 
 export const GlobalContext = createContext(null);
 
@@ -82,7 +83,11 @@ const GlobalProvider = ({ children }) => {
     setTotalQty(qty);
 
     const totalPrice = cartItem.reduce((prev, curr) => {
-      return prev + curr.productId.price * curr.quantity;
+      return (
+        prev +
+        priceWithDiscount(curr.productId.price, curr.productId.discount) *
+          curr.quantity
+      );
     }, 0);
     setTotalPrice(totalPrice);
   }, [cartItem]);
