@@ -57,20 +57,28 @@ const AddToCartButton = ({ data }) => {
     setCartItemDetails(product);
   }, [data, cartItem]);
 
-  const increaseQty = (e) => {
+  const increaseQty = async (e) => {
     e.preventDefault();
     e.stopPropagation();
 
-    updateCartItem(cartItemDetails?._id, qty + 1);
+    const response = await updateCartItem(cartItemDetails?._id, qty + 1);
+
+    if (response.success) {
+      toast.success("Item added");
+    }
   };
 
-  const decreaseQty = (e) => {
+  const decreaseQty = async (e) => {
     e.preventDefault();
     e.stopPropagation();
     if (qty === 1) {
       deleteCartItem(cartItemDetails?._id);
     } else {
-      updateCartItem(cartItemDetails?._id, qty - 1);
+      const response = await updateCartItem(cartItemDetails?._id, qty - 1);
+
+      if (response.success) {
+        toast.success("Item remove");
+      }
     }
   };
   return (

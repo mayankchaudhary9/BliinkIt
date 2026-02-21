@@ -5,6 +5,8 @@ import { useGlobalContext } from "../provider/GlobalProvider";
 import { DisplayPriceInRupee } from "../utils/DisplayPriceInRupee";
 import { FaCaretRight } from "react-icons/fa";
 import { useSelector } from "react-redux";
+import AddToCartButton from "./AddToCartButton";
+import { priceWithDiscount } from "../utils/PriceWithDiscount";
 
 const DisplayCartItem = ({ close }) => {
   const { notDiscountTotalPrice, totalPrice } = useGlobalContext();
@@ -28,12 +30,36 @@ const DisplayCartItem = ({ close }) => {
             <p>Your total savings</p>
             <p>{DisplayPriceInRupee(notDiscountTotalPrice - totalPrice)}</p>
           </div>
-          <div className="bg-white rounded-lg p-2">
+          <div className="bg-white rounded-lg p-4 grid gap-5 overflow-auto">
             {cartItem[0] &&
               cartItem.map((item, index) => {
                 return (
-                  <div>
-                    <div className="w-20"></div>
+                  <div className="flex w-full gap-4">
+                    <div className="w-16 h-16 min-h-16 min-w-16 bg-red-500 border rounded">
+                      <img
+                        src={item?.productId?.image[0]}
+                        className="object-scale-down"
+                      />
+                    </div>
+                    <div className="w-full max-w-sm text-xs">
+                      <p className="text-xs text-ellipsis line-clamp-2">
+                        {item?.productId?.name}
+                      </p>
+                      <p className="text-neutral-400">
+                        {item?.productId?.unit}
+                      </p>
+                      <p className="font-semibold">
+                        {DisplayPriceInRupee(
+                          priceWithDiscount(
+                            item?.productId?.price,
+                            item?.productId?.discount,
+                          ),
+                        )}
+                      </p>
+                    </div>
+                    <div>
+                      <AddToCartButton data={item?.productId} />
+                    </div>
                   </div>
                 );
               })}

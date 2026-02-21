@@ -95,6 +95,7 @@ export const updateCartItemQtyController = async (req, res) => {
     const updateCartItem = await CartProductModel.updateOne(
       {
         _id: _id,
+        userId: userId,
       },
       {
         quantity: qty,
@@ -102,7 +103,7 @@ export const updateCartItemQtyController = async (req, res) => {
     );
 
     return res.json({
-      message: "Item added",
+      message: "Update Cart",
       success: true,
       error: false,
       data: updateCartItem,
