@@ -15,6 +15,7 @@ const GlobalProvider = ({ children }) => {
   const dispatch = useDispatch();
   const [totalPrice, setTotalPrice] = useState(0);
   const [totalQty, setTotalQty] = useState(0);
+  const [notDiscountTotalPrice, setNotDiscountTotalPrice] = useState(0);
   const cartItem = useSelector((state) => state.cartItem.cart);
   const fetchCartItem = async () => {
     try {
@@ -90,6 +91,11 @@ const GlobalProvider = ({ children }) => {
       );
     }, 0);
     setTotalPrice(totalPrice);
+
+    const notDiscountPrice = cartItem.reduce((prev, curr) => {
+      return prev + curr?.productId?.price * curr.quantity;
+    }, 0);
+    setNotDiscountTotalPrice(notDiscountPrice);
   }, [cartItem]);
   return (
     <GlobalContext.Provider
@@ -99,6 +105,7 @@ const GlobalProvider = ({ children }) => {
         deleteCartItem,
         totalPrice,
         totalQty,
+        notDiscountTotalPrice,
       }}
     >
       {children}
