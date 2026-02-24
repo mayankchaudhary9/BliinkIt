@@ -17,6 +17,8 @@ const GlobalProvider = ({ children }) => {
   const [totalQty, setTotalQty] = useState(0);
   const [notDiscountTotalPrice, setNotDiscountTotalPrice] = useState(0);
   const cartItem = useSelector((state) => state.cartItem.cart);
+  const user = useSelector((state) => state?.user);
+
   const fetchCartItem = async () => {
     try {
       const response = await Axios({
@@ -75,9 +77,6 @@ const GlobalProvider = ({ children }) => {
       AxiosToastError(error);
     }
   };
-  useEffect(() => {
-    fetchCartItem();
-  }, []);
 
   useEffect(() => {
     const qty = cartItem.reduce((prev, curr) => {
@@ -99,6 +98,17 @@ const GlobalProvider = ({ children }) => {
     }, 0);
     setNotDiscountTotalPrice(notDiscountPrice);
   }, [cartItem]);
+
+  const handleLogout = () => {
+    localStorage.clear();
+    dispatch(handleAddItemCart([]));
+  };
+
+  useEffect(() => {
+    fetchCartItem();
+    handleLogout();
+  }, [user]);
+
   return (
     <GlobalContext.Provider
       value={{

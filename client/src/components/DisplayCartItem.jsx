@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import AddToCartButton from "./AddToCartButton";
 import { priceWithDiscount } from "../utils/PriceWithDiscount";
 import imageEmptyCart from "../assets/empty_cart.webp";
+import toast from "react-hot-toast";
 
 const DisplayCartItem = ({ close }) => {
   const { notDiscountTotalPrice, totalPrice, totalQty } = useGlobalContext();
@@ -18,8 +19,12 @@ const DisplayCartItem = ({ close }) => {
   const handleCheckoutPage = () => {
     if (user?._id) {
       navigate("/checkout");
+      if (close) {
+        close();
+      }
       return;
     }
+    toast("Please login");
   };
   return (
     <section className="bg-neutral-900/70 fixed top-0 bottom-0 right-0 left-0 z-50">
