@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { DisplayPriceInRupee } from "../utils/DisplayPriceInRupee";
 import { useGlobalContext } from "../provider/GlobalProvider";
+import AddAddress from "../components/AddAddress";
 
 const CheckoutPage = () => {
   const { notDiscountTotalPrice, totalPrice, totalQty } = useGlobalContext();
+  const [openAddress, setOpenAddress] = useState(false);
 
   return (
     <section className="bg-blue-50">
@@ -11,7 +13,10 @@ const CheckoutPage = () => {
         <div className="w-full">
           {/* address */}
           <h3 className="text-lg font-semibold">Choose your address</h3>
-          <div className="h-16 bg-blue-50 border-2 border-dashed flex justify-center">
+          <div
+            onClick={() => setOpenAddress(true)}
+            className="h-16 bg-blue-50 border-2 border-dashed flex items-center justify-center cursor-pointer"
+          >
             Add address
           </div>
         </div>
@@ -52,6 +57,8 @@ const CheckoutPage = () => {
           </div>
         </div>
       </div>
+
+      {openAddress && <AddAddress close={() => setOpenAddress(false)} />}
     </section>
   );
 };
