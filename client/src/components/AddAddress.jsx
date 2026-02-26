@@ -1,10 +1,41 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import Axios from "../utils/Axios";
+import AxiosToastError from "../utils/AxiosToastError";
+import SummaryApi from "../common/SummaryApi";
+import toast from "react-hot-toast";
 
-const AddAddress = () => {
-  const { register, handleSubmit } = useForm();
+const AddAddress = ({ close }) => {
+  const { register, handleSubmit, reset } = useForm();
 
-  const onSubmit = (data) => {};
+  const onSubmit = async (data) => {
+    try {
+      const response = await Axios({
+        ...SummaryApi.createAddress,
+        data: {
+          address_line: data.addressline,
+          city: data.city,
+          state: data.state,
+          country: data.country,
+          pincode: data.pincode,
+          mobile: data.mobile,
+        },
+      });
+
+      const { data: responseData } = response;
+
+      if (responseData.success) {
+        toast.success(responseData.message);
+        if (close) {
+          close();
+          reset();
+        }
+      }
+    } catch (error) {
+      AxiosToastError(error);
+    }
+  };
+
   return (
     <section className="bg-black/70 fixed top-0 left-0 right-0 bottom-0 z-50 h-screen overflow-auto">
       <div className="bg-white p-4 w-full max-w-lg mt-8 mx-auto rounded">
