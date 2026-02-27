@@ -38,10 +38,10 @@ const AddAddress = ({ close }) => {
 
   return (
     <section className="bg-black/70 fixed top-0 left-0 right-0 bottom-0 z-50 h-screen overflow-auto">
-      <div className="bg-white p-4 w-full max-w-lg mt-8 mx-auto rounded">
-        <h2 className="font-semibold">Add Address</h2>
-        <form className="mt-4 grid gap-4" onSubmit={handleSubmit(onSubmit)}>
-          <div className="grid gap-1">
+      {/* <div className="bg-white p-4 w-full max-w-lg mt-8 mx-auto rounded"> */}
+        {/* <h2 className="font-semibold">Add Address</h2> */}
+        {/* <form className="mt-4 grid gap-4" onSubmit={handleSubmit(onSubmit)}> */}
+          {/* <div className="grid gap-1"> */}
             <label htmlFor="addressline">Address Line :</label>
             <input
               type="text"
