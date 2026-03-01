@@ -2,11 +2,14 @@ import React, { useState } from "react";
 import { DisplayPriceInRupee } from "../utils/DisplayPriceInRupee";
 import { useGlobalContext } from "../provider/GlobalProvider";
 import AddAddress from "../components/AddAddress";
+import { useSelector } from "react-redux";
 
 const CheckoutPage = () => {
   const { notDiscountTotalPrice, totalPrice, totalQty } = useGlobalContext();
   const [openAddress, setOpenAddress] = useState(false);
+  const addressList = useSelector((state) => state.addresses.addressList);
 
+  console.log(addressList, "jhhhhhhhhhhhhhhhhhhhhhhhh");
   return (
     <section className="bg-blue-50">
       <div className="container mx-auto p-4 flex flex-col lg:flex-row w-full gap-5 justify-between">
