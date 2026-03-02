@@ -8,6 +8,7 @@ const CheckoutPage = () => {
   const { notDiscountTotalPrice, totalPrice, totalQty } = useGlobalContext();
   const [openAddress, setOpenAddress] = useState(false);
   const addressList = useSelector((state) => state.addresses.addressList);
+  const [selectAddress, setSelectAddress] = useState(0);
 
   return (
     <section className="bg-blue-50">
@@ -18,14 +19,19 @@ const CheckoutPage = () => {
           <div className="bg-white p-2 grid gap-4">
             {addressList.map((address, index) => {
               return (
-                <div className="border rounded p-3">
-                  <p>{address.address_line}</p>
-                  <p>{address.city}</p>
-                  <p>{address.state}</p>
-                  <p>
-                    {address.country} - {address.pincode}
-                  </p>
-                  <p>{address.mobile}</p>
+                <div className="border rounded p-3 flex gap-3">
+                  <div>
+                    <input type="radio" value={index} name="address" />
+                  </div>
+                  <div>
+                    <p>{address.address_line}</p>
+                    <p>{address.city}</p>
+                    <p>{address.state}</p>
+                    <p>
+                      {address.country} - {address.pincode}
+                    </p>
+                    <p>{address.mobile}</p>
+                  </div>
                 </div>
               );
             })}
