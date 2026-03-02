@@ -8,6 +8,6 @@ import {
 const addressRouter = Router();
 
 addressRouter.post("/create", auth, addAddressController);
-addressRouter.post("/get", auth, getAddressController);
+addressRouter.get("/get", auth, getAddressController);
 
 export default addressRouter;

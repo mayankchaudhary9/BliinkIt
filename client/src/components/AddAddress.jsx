@@ -4,9 +4,12 @@ import Axios from "../utils/Axios";
 import AxiosToastError from "../utils/AxiosToastError";
 import SummaryApi from "../common/SummaryApi";
 import toast from "react-hot-toast";
+import { IoClose } from "react-icons/io5";
+import { useGlobalContext } from "../provider/GlobalProvider";
 
 const AddAddress = ({ close }) => {
   const { register, handleSubmit, reset } = useForm();
+  const { fetchAddress } = useGlobalContext();
 
   const onSubmit = async (data) => {
     try {
@@ -29,6 +32,7 @@ const AddAddress = ({ close }) => {
         if (close) {
           close();
           reset();
+          fetchAddress();
         }
       }
     } catch (error) {
@@ -39,7 +43,12 @@ const AddAddress = ({ close }) => {
   return (
     <section className="bg-black/70 fixed top-0 left-0 right-0 bottom-0 z-50 h-screen overflow-auto">
       <div className="bg-white p-4 w-full max-w-lg mt-8 mx-auto rounded">
-        <h2 className="font-semibold">Add Address</h2>
+        <div className="flex justify-between items-center gap-4">
+          <h2 className="font-semibold">Add Address</h2>
+          <button onClick={close} className="hover:text-red-500">
+            <IoClose size={25} />
+          </button>
+        </div>
         <form className="mt-4 grid gap-4" onSubmit={handleSubmit(onSubmit)}>
           <div className="grid gap-1">
             <label htmlFor="addressline">Address Line :</label>

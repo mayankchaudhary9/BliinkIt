@@ -9,18 +9,32 @@ const CheckoutPage = () => {
   const [openAddress, setOpenAddress] = useState(false);
   const addressList = useSelector((state) => state.addresses.addressList);
 
-  console.log(addressList, "jhhhhhhhhhhhhhhhhhhhhhhhh");
   return (
     <section className="bg-blue-50">
       <div className="container mx-auto p-4 flex flex-col lg:flex-row w-full gap-5 justify-between">
         <div className="w-full">
           {/* address */}
           <h3 className="text-lg font-semibold">Choose your address</h3>
-          <div
-            onClick={() => setOpenAddress(true)}
-            className="h-16 bg-blue-50 border-2 border-dashed flex items-center justify-center cursor-pointer"
-          >
-            Add address
+          <div className="bg-white p-2 grid gap-4">
+            {addressList.map((address, index) => {
+              return (
+                <div className="border rounded p-3">
+                  <p>{address.address_line}</p>
+                  <p>{address.city}</p>
+                  <p>{address.state}</p>
+                  <p>
+                    {address.country} - {address.pincode}
+                  </p>
+                  <p>{address.mobile}</p>
+                </div>
+              );
+            })}
+            <div
+              onClick={() => setOpenAddress(true)}
+              className="h-16 bg-blue-50 border-2 border-dashed flex items-center justify-center cursor-pointer"
+            >
+              Add address
+            </div>
           </div>
         </div>
         <div className="w-full max-w-md bg-white py-4 px-2">
