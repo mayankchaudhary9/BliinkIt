@@ -10,6 +10,7 @@ const CheckoutPage = () => {
   const addressList = useSelector((state) => state.addresses.addressList);
   const [selectAddress, setSelectAddress] = useState(0);
 
+  console.log(addressList[selectAddress]);
   return (
     <section className="bg-blue-50">
       <div className="container mx-auto p-4 flex flex-col lg:flex-row w-full gap-5 justify-between">
@@ -19,20 +20,28 @@ const CheckoutPage = () => {
           <div className="bg-white p-2 grid gap-4">
             {addressList.map((address, index) => {
               return (
-                <div className="border rounded p-3 flex gap-3">
-                  <div>
-                    <input type="radio" value={index} name="address" />
+                <label htmlFor={"address" + index}>
+                  <div className="border rounded p-3 flex gap-3 hover:bg-blue-50">
+                    <div>
+                      <input
+                        id={"address" + index}
+                        type="radio"
+                        value={index}
+                        onChange={(e) => setSelectAddress(e.target.value)}
+                        name="address"
+                      />
+                    </div>
+                    <div>
+                      <p>{address.address_line}</p>
+                      <p>{address.city}</p>
+                      <p>{address.state}</p>
+                      <p>
+                        {address.country} - {address.pincode}
+                      </p>
+                      <p>{address.mobile}</p>
+                    </div>
                   </div>
-                  <div>
-                    <p>{address.address_line}</p>
-                    <p>{address.city}</p>
-                    <p>{address.state}</p>
-                    <p>
-                      {address.country} - {address.pincode}
-                    </p>
-                    <p>{address.mobile}</p>
-                  </div>
-                </div>
+                </label>
               );
             })}
             <div
