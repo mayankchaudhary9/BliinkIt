@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import AddAddress from "../components/AddAddress";
 
 const Address = () => {
   const addressList = useSelector((state) => state.addresses.addressList);
-  const [selectAddress, setSelectAddress] = useState(false);
+  const [openAddress, setOpenAddress] = useState(false);
 
   return (
     <div>
       <div className="bg-white shadow-lg px-2 py-2 flex justify-between gap-4 items-center">
         <h2 className="font-semibold text-ellipsis line-clamp-1">Address</h2>
         <button
-          onClick={() => setSelectAddress(true)}
+          onClick={() => setOpenAddress(true)}
           className="border border-primary-200 text-primary-200 px-3 py-1 rounded-full hover:bg-primary-200 hover:text-black"
         >
           Add Address
@@ -39,6 +40,12 @@ const Address = () => {
           Add address
         </div>
       </div>
+      {/* part-5  1:37:00  */}
+      {
+        openAddress && (
+          <AddAddress close = {() => setOpenAddress(false)} />
+        )
+      }
     </div>
   );
 };
